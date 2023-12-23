@@ -486,6 +486,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>graphics</GroupName>
+          <Files>
+            <File>
+              <FileName>renderer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\graphics\renderer.c</FilePath>
+            </File>
+            <File>
+              <FileName>renderer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\graphics\renderer.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>

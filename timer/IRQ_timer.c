@@ -31,7 +31,7 @@ void TIMER0_IRQHandler (void)
   if(getDisplayPoint(&display, Read_Ads7846(), &matrix )){
 		if(display.y < 280){
 			TP_DrawPoint(display.x,display.y);
-			GUI_Text(200, 0, (uint8_t *) "     ", Blue, Blue);
+			GUI_Text(200, 0, (uint8_t *) "     ", BLUE, BLUE);
 			clear = 0;
 		}
 		else{			
@@ -39,10 +39,10 @@ void TIMER0_IRQHandler (void)
 				clear++;
 				if(clear%20 == 0){
 					sprintf(time_in_char,"%4d",clear/20);
-					GUI_Text(200, 0, (uint8_t *) time_in_char, White, Blue);
+					GUI_Text(200, 0, (uint8_t *) time_in_char, WHITE, BLUE);
 					if(clear == 200){	/* 1 seconds = 200 times * 500 us*/
-						LCD_Clear(Blue);
-						GUI_Text(0, 280, (uint8_t *) " touch here : 1 sec to clear ", Blue, White);			
+						LCD_Clear(BLUE);
+						GUI_Text(0, 280, (uint8_t *) " touch here : 1 sec to clear ", BLUE, WHITE);			
 						clear = 0;
 					}
 				}
