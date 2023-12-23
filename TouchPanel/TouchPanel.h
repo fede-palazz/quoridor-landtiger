@@ -27,11 +27,11 @@
 #include "LPC17xx.h"
 
 /* Private typedef -----------------------------------------------------------*/
-typedef	struct POINT 
+typedef struct POINT 
 {
    uint16_t x;
    uint16_t y;
-}Coordinate;
+} Coordinate;
 
 
 typedef struct Matrix 
@@ -51,8 +51,8 @@ extern Coordinate DisplaySample[3];
 extern Matrix 		matrix ;
 extern Coordinate display ;
 
-#define	CHX 	        0x90 	/* Í¨µÀY+µÄÑ¡Ôñ¿ØÖÆ×Ö */	
-#define	CHY 	        0xd0	/* Í¨µÀX+µÄÑ¡Ôñ¿ØÖÆ×Ö */
+#define	CHX 	        0x90 	/* Í¨ï¿½ï¿½Y+ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */	
+#define	CHY 	        0xd0	/* Í¨ï¿½ï¿½X+ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 
 #define SSPSR_RNE       2
 #define SSPSR_BSY       4
@@ -75,10 +75,10 @@ extern Coordinate display ;
 /* Private function prototypes -----------------------------------------------*/				
 void TP_Init(void);	
 Coordinate *Read_Ads7846(void);
-void TouchPanel_Calibrate(void);
+// void TouchPanel_Calibrate(void);
 void DrawCross(uint16_t Xpos,uint16_t Ypos);
 void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos);
-uint8_t setCalibrationMatrix( Coordinate * displayPtr,Coordinate * screenPtr,Matrix * matrixPtr);
+// uint8_t setCalibrationMatrix( Coordinate * displayPtr,Coordinate * screenPtr,Matrix * matrixPtr);
 uint8_t getDisplayPoint(Coordinate * displayPtr,Coordinate * screenPtr,Matrix * matrixPtr );
 
 #endif
