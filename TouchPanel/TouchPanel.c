@@ -249,7 +249,7 @@ void TP_GetAdXY(int *x,int *y)
 *******************************************************************************/
 void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos)
 {
-  LCD_SetPoint(Xpos,Ypos,WHITE);  
+  LCD_SetPoint(Xpos,Ypos,0xFFFF);  
 }	
 
 /*******************************************************************************

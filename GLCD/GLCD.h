@@ -31,7 +31,7 @@
 #define PIN_EN		(1 << 19)
 #define PIN_LE		(1 << 20)
 #define PIN_DIR		(1 << 21)
-#define PIN_CS      (1 << 22)
+#define PIN_CS    (1 << 22)
 #define PIN_RS		(1 << 23)
 #define PIN_WR		(1 << 24)
 #define PIN_RD		(1 << 25)   
@@ -59,17 +59,17 @@
 
 #endif
 
-/* LCD color */
-#define WHITE          0xFFFF
-#define BLACK          0x0000
-#define GREY           0xF7DE
-#define BLUE           0x001F
-#define BLUE2          0x051F
-#define RED            0xF800
-#define MAGENTA        0xF81F
-#define GREEN          0x07E0
-#define CYAN           0x7FFF
-#define YELLOW         0xFFE0
+///* LCD color */
+//#define WHITE          0xFFFF
+//#define BLACK          0x0000
+//#define GREY           0xF7DE
+//#define BLUE           0x001F
+//#define BLUE2          0x051F
+//#define RED            0xF800
+//#define MAGENTA        0xF81F
+//#define GREEN          0x07E0
+//#define CYAN           0x7FFF
+//#define YELLOW         0xFFE0
 
 /******************************************************************************
 * Function Name  : RGB565CONVERT

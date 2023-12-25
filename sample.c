@@ -24,7 +24,7 @@
 #include "LPC17xx.h"
 #include "GLCD/GLCD.h" 
 #include "graphics/renderer.h"
-//#include "TouchPanel/TouchPanel.h"
+#include "game/game.h"
 #include "timer/timer.h"
 
 #define SIMULATOR 1
@@ -34,14 +34,31 @@ extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emul
 #endif
 
 	Coordinate p1 = {10,10};
-	Coordinate p2 = {50,50};
+	Coordinate p2 = {31,31};
+	Coordinate p3 = {120,120};
+	Coordinate p4 = {200,200};
 
 int main(void)
-{
+{ 
   SystemInit();  												/* System Initialization (i.e., PLL)  */
   LCD_Initialization();									/* LCD display Initialization					*/
 	
-	drawRectangle(p1, p2, RED, BLUE);
+//	drawThickRectangle(p1, p2, RED, BLUE, 5);
+//	drawThickRectangle(p3, p4, RED, BLUE, 10);
+	//drawRectangle(p1, p2, BLACK, NO_COLOR);
+	drawBoard(BLACK, NO_COLOR, 2);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//LCD_Clear(BLUE);
 	//GUI_Text(0, 305, (uint8_t *) " touch here : 1 sec to clear  ", BLUE, WHITE);
