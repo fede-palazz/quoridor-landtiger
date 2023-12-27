@@ -37,3 +37,21 @@ void drawThickRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color 
 	drawRectangle(p1, p2, outlineColor, fillColor);
 }
 	
+void drawAvatar(Avatar avatar, Coordinate squarePos) {
+	int row, col;
+	Coordinate pos;
+	
+	// Calculate initial position on screen
+	pos.x = LAT_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.x + SQUARE_BORDERS;
+	pos.y = TOP_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.y + SQUARE_BORDERS;
+
+	// Draw avatar
+	for (row=0; row<AVATAR_SIZE; row++) {
+		for (col=0; col<AVATAR_SIZE; col++) {
+			// if pixel should be coloured
+			if (avatar.pixelData[row][col]) {
+				LCD_SetPoint(pos.x + col, pos.y + row, avatar.color);
+			}
+		}
+	}
+}

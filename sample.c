@@ -33,23 +33,27 @@
 extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emulator to find the symbol (can be placed also inside system_LPC17xx.h but since it is RO, it needs more work)
 #endif
 
-	Coordinate p1 = {10,10};
-	Coordinate p2 = {31,31};
+	Coordinate p1 = {LAT_PADDING,TOP_PADDING+SQUARE_LENGTH+1};
+	Coordinate p2 = {LAT_PADDING+SQUARE_LENGTH*7+INT_PADDING*6,TOP_PADDING+SQUARE_LENGTH+2};
 	Coordinate p3 = {120,120};
 	Coordinate p4 = {200,200};
+	Coordinate p5 = {2,2};
+	Coordinate p6 = {5,3};
+	Avatar avatar1;
+	Avatar avatar2;
 
 int main(void)
 { 
   SystemInit();  												/* System Initialization (i.e., PLL)  */
   LCD_Initialization();									/* LCD display Initialization					*/
 	
-//	drawThickRectangle(p1, p2, RED, BLUE, 5);
-//	drawThickRectangle(p3, p4, RED, BLUE, 10);
-	//drawRectangle(p1, p2, BLACK, NO_COLOR);
-	drawBoard(BLACK, NO_COLOR, 2);
-	
-	
-	
+
+	drawBoard(BLACK, NO_COLOR);
+	avatar1 = get_random_avatar(BLUE_GH);
+	avatar2 = get_random_avatar(GREEN_GH);
+	drawAvatar(avatar1, p5);
+	drawAvatar(avatar2, p6);
+
 	
 	
 	

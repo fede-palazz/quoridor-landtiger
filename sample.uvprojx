@@ -498,11 +498,6 @@
               <FileType>5</FileType>
               <FilePath>.\graphics\renderer.h</FilePath>
             </File>
-            <File>
-              <FileName>colors.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\graphics\colors.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -517,6 +512,26 @@
               <FileName>game.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\game\game.h</FilePath>
+            </File>
+            <File>
+              <FileName>constants.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\game\constants.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>entities</GroupName>
+          <Files>
+            <File>
+              <FileName>avatar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\entities\avatar.c</FilePath>
+            </File>
+            <File>
+              <FileName>avatar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\entities\avatar.h</FilePath>
             </File>
           </Files>
         </Group>
