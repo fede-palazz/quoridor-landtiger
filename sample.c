@@ -26,6 +26,8 @@
 #include "graphics/renderer.h"
 #include "game/game.h"
 #include "timer/timer.h"
+#include <stdlib.h>
+#include <time.h>
 
 #define SIMULATOR 1
 
@@ -46,7 +48,7 @@ int main(void)
 { 
   SystemInit();  												/* System Initialization (i.e., PLL)  */
   LCD_Initialization();									/* LCD display Initialization					*/
-	
+	srand(time(NULL));
 
 	drawBoard(BLACK, NO_COLOR);
 	avatar1 = get_random_avatar(BLUE_GH);

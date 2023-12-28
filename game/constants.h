@@ -27,6 +27,7 @@
 #define GREEN         0x07E0
 #define GREEN_GH			0x8ED7
 #define BLUE_GH				0x8EBB
+#define RED_GH				0xF90A
 #define CYAN          0x7FFF
 #define YELLOW        0xFFE0
 #define NO_COLOR      -1
