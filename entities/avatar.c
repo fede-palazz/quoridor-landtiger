@@ -1,6 +1,5 @@
 #include "avatar.h"
 #include <stdlib.h>
-#include <time.h>
 
 
 static uint8_t avatar_1_pixel_data[AVATAR_SIZE][AVATAR_SIZE] = {
@@ -233,8 +232,12 @@ int randomIndex;
 /* Function that returns a random avatar */
 Avatar get_random_avatar(Color color) {
   Avatar avatar;
-	//srand(time(NULL));
-	
+	// TODO: inizialize seed with an ADC read
+	// srand(ADC_VALUE);
+	// Check if all the avatars have been used
+	if (chosenAvatars == 255) {
+		chosenAvatars = 0;
+	}
 	// Check whether the avatar was already assigned
 	do {
 		randomIndex = rand() % NUM_AVATARS;

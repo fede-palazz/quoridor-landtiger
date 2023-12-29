@@ -14,6 +14,8 @@
 #define	INT_PADDING			5
 #define SQUARE_BORDERS	2
 #define SQUARE_LENGTH 	(LCD_WIDTH - LAT_PADDING * 2 - (INT_PADDING * (SQUARE_NUM - 1))) / SQUARE_NUM
+// TODO
+#define BG_COLOR				NO_COLOR
 
 /* LCD colors */
 #define Color 				int16_t

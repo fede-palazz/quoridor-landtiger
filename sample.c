@@ -42,19 +42,17 @@ extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emul
 	Coordinate p5 = {2,2};
 	Coordinate p6 = {5,3};
 	Avatar avatar1;
-	Avatar avatar2;
 
 int main(void)
 { 
-  SystemInit();  												/* System Initialization (i.e., PLL)  */
-  LCD_Initialization();									/* LCD display Initialization					*/
-	srand(time(NULL));
+  SystemInit();  														/* System Initialization (i.e., PLL)  */
+  LCD_Initialization();											/* LCD display Initialization					*/
 
+	//LCD_Clear(BG_COLOR);										/* Set background color 							*/
 	drawBoard(BLACK, NO_COLOR);
-	avatar1 = get_random_avatar(BLUE_GH);
-	avatar2 = get_random_avatar(GREEN_GH);
+	avatar1 = get_random_avatar(RED_GH);
+
 	drawAvatar(avatar1, p5);
-	drawAvatar(avatar2, p6);
 
 	
 	
@@ -66,7 +64,7 @@ int main(void)
 	
 	
 	
-	//LCD_Clear(BLUE);
+	
 	//GUI_Text(0, 305, (uint8_t *) " touch here : 1 sec to clear  ", BLUE, WHITE);
 	//LCD_DrawLine(0, 0, 200, 200, WHITE);
 	//init_timer(0, 0x1312D0 ); 						/* 50ms * 25MHz = 1.25*10^6 = 0x1312D0 */
