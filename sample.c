@@ -22,12 +22,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "LPC17xx.h"
-#include "GLCD/GLCD.h" 
-#include "graphics/renderer.h"
+#include "RIT/RIT.h"
 #include "game/game.h"
 #include "timer/timer.h"
-#include <stdlib.h>
-#include <time.h>
+#include "joystick/joystick.h"
+#include "button_EXINT/button.h"
 
 #define SIMULATOR 1
 
@@ -35,25 +34,25 @@
 extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emulator to find the symbol (can be placed also inside system_LPC17xx.h but since it is RO, it needs more work)
 #endif
 
-	Coordinate p1 = {LAT_PADDING,TOP_PADDING+SQUARE_LENGTH+1};
-	Coordinate p2 = {LAT_PADDING+SQUARE_LENGTH*7+INT_PADDING*6,TOP_PADDING+SQUARE_LENGTH+2};
-	Coordinate p3 = {120,120};
-	Coordinate p4 = {200,200};
-	Coordinate p5 = {2,2};
-	Coordinate p6 = {5,3};
-	Avatar avatar1;
 
 int main(void)
 { 
-  SystemInit();  														/* System Initialization (i.e., PLL)  */
-  LCD_Initialization();											/* LCD display Initialization					*/
+  SystemInit();  									/* System Initialization (i.e., PLL)  */
+  BUTTON_init();
+	LCD_Initialization();						/* LCD display Initialization					*/
+	init_RIT(0x004C4B40);						/* RIT Initialization 50 msec       	*/
+	//initGame();
+	
+	// enable_timer(0);
+  enable_RIT();
 
-	//LCD_Clear(BG_COLOR);										/* Set background color 							*/
-	drawBoard(BLACK, NO_COLOR);
-	avatar1 = get_random_avatar(RED_GH);
+  //NVIC_SetPriority(RIT_IRQn, 3);
+  // NVIC_SetPriority(TIMER0_IRQn, 2);
+  //NVIC_SetPriority(TIMER1_IRQn, 1);
+	
 
-	drawAvatar(avatar1, p5);
-
+	// max 30 chars in a row
+	//GUI_Text(0, 305, (uint8_t *) "no more walls, move the token", BLUE, WHITE);
 	
 	
 	
@@ -79,7 +78,7 @@ int main(void)
 	
   while (1)	
   {
-		__ASM("wfi");
+		//__ASM("wfi");
   }
 }
 

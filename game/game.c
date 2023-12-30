@@ -1,37 +1,56 @@
 #include "game.h"
+#include "../entities/player.h"
+
+void initPlayers(void);
+void drawPlayers(void);
+
+/*
+	Convention:
+	 - "0" -> nothing there
+	 - "1" -> player
+	 - "2" -> barrier
+*/
+static uint8_t board[13][13] = {
+	{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+};
+static GameStatus gameStatus = WAITING;
+static Player p1, p2;
 
 
-//static uint8_t board[13][13] = {
-//	{}
-//};
 
-
-void drawBoard(Color outlineColor, Color fillColor) {
-//	int squareLen = getSquaresLength(LAT_PADDING, INT_PADDING);
-	int row, col;
-	Coordinate p1, p2;
-
-	for (row=0; row<SQUARE_NUM; row++) {
-		// Update coordinates for next row
-		p1.x = LAT_PADDING;
-		p1.y = TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * row;
-		p2.x = LAT_PADDING + SQUARE_LENGTH;
-		p2.y = TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * row + SQUARE_LENGTH;
-		
-		for (col=0; col<SQUARE_NUM; col++) {
-			drawThickRectangle(p1, p2, outlineColor, fillColor, SQUARE_BORDERS);
-			// Update coordinates for next col
-			p1.x += SQUARE_LENGTH + INT_PADDING;
-			p2.x += SQUARE_LENGTH + INT_PADDING;
-		}
-	}
+void initGame() {
+	//LCD_Clear(BG_COLOR);							/* Set background color 	*/
+	drawBoard(BLACK, NO_COLOR);					/* Board initialization		*/
+	initPlayers();											/* Players initialization	*/
+	drawPlayers();
 }
 
-//int getSquaresLength(uint8_t externalPadding, uint8_t internalPadding) {
-//	return (LCD_WIDTH - externalPadding * 2 - (internalPadding * (SQUARE_NUM - 1))) / SQUARE_NUM;
-//	int expression = LCD_WIDTH - externalPadding * 2 - (internalPadding * (SQUARE_NUM - 1));
-//	int result = expression / SQUARE_NUM;
-//	int remainder = expression % SQUARE_NUM;
-//	// Round result if necessary
-//	return remainder * 2 > SQUARE_NUM ? result+1 : result;
-//}
+void initPlayers() {
+	Coordinate initialPosP1 = {6, 0};
+	Coordinate initialPosP2 = {6, 12};
+	initPlayer(&p1, initialPosP1, GREEN_GH);
+	initPlayer(&p2, initialPosP2, RED_GH);
+}
+
+
+/*******************
+** DRAW FUNCTIONS **
+********************/
+void drawPlayers() {
+	drawAvatar(p1.avatar, p1.pos);
+	drawAvatar(p2.avatar, p2.pos);
+}
+
+

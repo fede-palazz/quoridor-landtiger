@@ -1,27 +1,29 @@
 #include "button.h"
 #include "lpc17xx.h"
+#include "../utils/input.h"
 
-extern int down;
+extern int btn_down_counter[];
 
-void EINT0_IRQHandler (void)	  	/* INT0														 */
-{		
-	
-	LPC_SC->EXTINT &= (1 << 0);     /* clear pending interrupt         */
-}
-
-
-void EINT1_IRQHandler (void)	  	/* KEY1														 */
+void EINT0_IRQHandler (void)	  
 {
-	NVIC_DisableIRQ(EINT1_IRQn);		/* disable Button interrupts			 */
-	LPC_PINCON->PINSEL4    &= ~(1 << 22);     /* GPIO pin selection */
-	down=1;
-	LPC_SC->EXTINT &= (1 << 1);     /* clear pending interrupt         */
+	btn_down_counter[0] = 1;				/* alert that button has been pressed */
+	disableBtn(0);									/* self disable the button (both interrupt and pin) */
+  LPC_SC->EXTINT &= (1 << 0);     /* clear pending interrupt int0 */
 }
 
-void EINT2_IRQHandler (void)	  	/* KEY2														 */
+
+void EINT1_IRQHandler (void)	  
 {
+	btn_down_counter[1] = 1;				/* alert that button has been pressed */
+	disableBtn(1);									/* self disable the button (both interrupt and pin) */
+	LPC_SC->EXTINT &= (1 << 1);     /* clear pending interrupt key1 */
 	
-  LPC_SC->EXTINT &= (1 << 2);     /* clear pending interrupt         */    
 }
 
+void EINT2_IRQHandler (void)	  
+{
+	btn_down_counter[2] = 1;				/* alert that button has been pressed */
+	disableBtn(2);									/* self disable the button (both interrupt and pin) */
+	LPC_SC->EXTINT &= (1 << 2);     /* clear pending interrupt key2 */   
+}
 

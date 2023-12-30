@@ -40,6 +40,9 @@ void drawThickRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color 
 void drawAvatar(Avatar avatar, Coordinate squarePos) {
 	int row, col;
 	Coordinate pos;
+	// Convert base 13 coordinates into base 7
+	squarePos.x /= 2;
+	squarePos.y /= 2;
 	
 	// Calculate initial position on screen
 	pos.x = LAT_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.x + SQUARE_BORDERS;
@@ -55,3 +58,24 @@ void drawAvatar(Avatar avatar, Coordinate squarePos) {
 		}
 	}
 }
+
+void drawBoard(Color outlineColor, Color fillColor) {
+	int row, col;
+	Coordinate p1, p2;
+
+	for (row=0; row<SQUARE_NUM; row++) {
+		// Update coordinates for next row
+		p1.x = LAT_PADDING;
+		p1.y = TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * row;
+		p2.x = LAT_PADDING + SQUARE_LENGTH;
+		p2.y = TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * row + SQUARE_LENGTH;
+		
+		for (col=0; col<SQUARE_NUM; col++) {
+			drawThickRectangle(p1, p2, outlineColor, fillColor, SQUARE_BORDERS);
+			// Update coordinates for next col
+			p1.x += SQUARE_LENGTH + INT_PADDING;
+			p2.x += SQUARE_LENGTH + INT_PADDING;
+		}
+	}
+}
+
