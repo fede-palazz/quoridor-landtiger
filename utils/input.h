@@ -16,5 +16,6 @@
 
 extern volatile Input detectedInputs[];
 extern void updateDetectedInputs(void);
+extern void resetDetectedInputs(void);
 
 #endif

@@ -142,15 +142,21 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
 // </h>
 //*** <<< end of configuration section >>>    ***
 
+//  LPC_TIM0->PR = 20;
+	
+
 	NVIC_EnableIRQ(TIMER0_IRQn);
+	//NVIC_SetPriority(TIMER0_IRQn, 4);		/* less priority than buttons */
+	NVIC_SetPriority(TIMER0_IRQn, 0);		/* more priority than buttons */
 	return (1);
   }
   else if ( timer_num == 1 )
   {
-	LPC_TIM1->MR0 = TimerInterval;
-	LPC_TIM1->MCR = 3;				/* Interrupt and Reset on MR1 */
+	LPC_TIM1->MR0 = TimerInterval;	
+	LPC_TIM1->MCR = 3;				
 
 	NVIC_EnableIRQ(TIMER1_IRQn);
+	NVIC_SetPriority(TIMER1_IRQn, 5);	/* less priority than buttons and timer0*/
 	return (1);
   }
   return (0);

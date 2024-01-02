@@ -7,11 +7,9 @@
 ** Correlated files:    timer.h
 **--------------------------------------------------------------------------------------------------------
 *********************************************************************************************************/
-#include <string.h>
 #include "lpc17xx.h"
 #include "timer.h"
-#include "../GLCD/GLCD.h" 
-//#include "../TouchPanel/TouchPanel.h"
+#include "../graphics/renderer.h"
 
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
@@ -22,38 +20,17 @@
 ** Returned value:		None
 **
 ******************************************************************************/
+static int counter = 0;
+uint8_t buffer[10];
+
+    // Converte il numero in una stringa di caratteri usando sprintf
+    
 
 void TIMER0_IRQHandler (void)
 {
-//	static int clear = 0;
-//	char time_in_char[5] = "";
-//	
-//  if(getDisplayPoint(&display, Read_Ads7846(), &matrix )){
-//		if(display.y < 280){
-//			TP_DrawPoint(display.x,display.y);
-//			GUI_Text(200, 0, (uint8_t *) "     ", BLUE, BLUE);
-//			clear = 0;
-//		}
-//		else{			
-//			if(display.y <= 0x13E){			
-//				clear++;
-//				if(clear%20 == 0){
-//					sprintf(time_in_char,"%4d",clear/20);
-//					GUI_Text(200, 0, (uint8_t *) time_in_char, WHITE, BLUE);
-//					if(clear == 200){	/* 1 seconds = 200 times * 500 us*/
-//						LCD_Clear(BLUE);
-//						GUI_Text(0, 280, (uint8_t *) " touch here : 1 sec to clear ", BLUE, WHITE);			
-//						clear = 0;
-//					}
-//				}
-//			}
-//		}
-//	}
-//	else{
-//		//do nothing if touch returns values out of bounds
-//	}
+	sprintf((char *)buffer, "%d", counter++);						/* Convert number to char array */
+	GUI_Text(30,50,(uint8_t *) buffer, BLACK, WHITE);
   LPC_TIM0->IR = 1;			/* clear interrupt flag */
-  return;
 }
 
 
@@ -69,7 +46,6 @@ void TIMER0_IRQHandler (void)
 void TIMER1_IRQHandler (void)
 {
   LPC_TIM1->IR = 1;			/* clear interrupt flag */
-  return;
 }
 
 /******************************************************************************

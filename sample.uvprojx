@@ -337,7 +337,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>SIMULATOR</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -416,6 +416,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>led</GroupName>
+          <Files>
+            <File>
+              <FileName>funct_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\led\funct_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>lib_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\led\lib_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\led\led.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>button</GroupName>
+          <Files>
+            <File>
+              <FileName>button.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\button_EXINT\button.h</FilePath>
+            </File>
+            <File>
+              <FileName>IRQ_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\button_EXINT\IRQ_button.c</FilePath>
+            </File>
+            <File>
+              <FileName>lib_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\button_EXINT\lib_button.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>timer</GroupName>
           <Files>
             <File>
@@ -432,6 +472,41 @@
               <FileName>timer.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\timer\timer.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>RIT</GroupName>
+          <Files>
+            <File>
+              <FileName>IRQ_RIT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\RIT\IRQ_RIT.c</FilePath>
+            </File>
+            <File>
+              <FileName>lib_RIT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\RIT\lib_RIT.c</FilePath>
+            </File>
+            <File>
+              <FileName>RIT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\RIT\RIT.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>joystick</GroupName>
+          <Files>
+            <File>
+              <FileName>joystick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\joystick\joystick.h</FilePath>
+            </File>
+            <File>
+              <FileName>lib_joystick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\joystick\lib_joystick.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -486,23 +561,63 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>graphics</GroupName>
+          <GroupName>utils</GroupName>
           <Files>
             <File>
-              <FileName>renderer.c</FileName>
+              <FileName>button_handlers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\graphics\renderer.c</FilePath>
+              <FilePath>.\utils\button_handlers.c</FilePath>
             </File>
             <File>
-              <FileName>renderer.h</FileName>
+              <FileName>button_handlers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\graphics\renderer.h</FilePath>
+              <FilePath>.\utils\button_handlers.h</FilePath>
+            </File>
+            <File>
+              <FileName>button_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\utils\button_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>button_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\utils\button_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>datatypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\utils\datatypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>input.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\utils\input.c</FilePath>
+            </File>
+            <File>
+              <FileName>input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\utils\input.h</FilePath>
+            </File>
+            <File>
+              <FileName>joystick_handlers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\utils\joystick_handlers.c</FilePath>
+            </File>
+            <File>
+              <FileName>joystick_handlers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\utils\joystick_handlers.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>game</GroupName>
           <Files>
+            <File>
+              <FileName>constants.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\game\constants.h</FilePath>
+            </File>
             <File>
               <FileName>game.c</FileName>
               <FileType>1</FileType>
@@ -512,11 +627,6 @@
               <FileName>game.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\game\game.h</FilePath>
-            </File>
-            <File>
-              <FileName>constants.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\game\constants.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -546,107 +656,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utils</GroupName>
+          <GroupName>graphics</GroupName>
           <Files>
             <File>
-              <FileName>datatypes.h</FileName>
+              <FileName>renderer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\graphics\renderer.c</FilePath>
+            </File>
+            <File>
+              <FileName>renderer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\utils\datatypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>button_handlers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\utils\button_handlers.c</FilePath>
-            </File>
-            <File>
-              <FileName>button_handlers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\utils\button_handlers.h</FilePath>
-            </File>
-            <File>
-              <FileName>button_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\utils\button_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>button_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\utils\button_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>input.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\utils\input.c</FilePath>
-            </File>
-            <File>
-              <FileName>input.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\utils\input.h</FilePath>
-            </File>
-            <File>
-              <FileName>joystick_handlers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\utils\joystick_handlers.c</FilePath>
-            </File>
-            <File>
-              <FileName>joystick_handlers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\utils\joystick_handlers.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>joystick</GroupName>
-          <Files>
-            <File>
-              <FileName>joystick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\joystick\joystick.h</FilePath>
-            </File>
-            <File>
-              <FileName>lib_joystick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\joystick\lib_joystick.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>RIT</GroupName>
-          <Files>
-            <File>
-              <FileName>IRQ_RIT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\RIT\IRQ_RIT.c</FilePath>
-            </File>
-            <File>
-              <FileName>lib_RIT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\RIT\lib_RIT.c</FilePath>
-            </File>
-            <File>
-              <FileName>RIT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\RIT\RIT.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>button_EXINT</GroupName>
-          <Files>
-            <File>
-              <FileName>button.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\button_EXINT\button.h</FilePath>
-            </File>
-            <File>
-              <FileName>IRQ_button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\button_EXINT\IRQ_button.c</FilePath>
-            </File>
-            <File>
-              <FileName>lib_button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\button_EXINT\lib_button.c</FilePath>
+              <FilePath>.\graphics\renderer.h</FilePath>
             </File>
           </Files>
         </Group>

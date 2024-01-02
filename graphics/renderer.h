@@ -1,6 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <stdio.h>
 #include "../GLCD/GLCD.h" 
 #include "../game/constants.h"
 #include "../utils/datatypes.h"
@@ -13,5 +14,7 @@ extern void drawThickRectangle(Coordinate p1, Coordinate p2, Color outlineColor,
 extern void drawAvatar(Avatar avatar, Coordinate squarePos);
 extern void drawBoard(Color outlineColor, Color fillColor);
 extern void drawPlayers(Player p1, Player p2);
+extern void drawInitialLabels(void);
+extern void drawInitialMessage(void);
 
 #endif

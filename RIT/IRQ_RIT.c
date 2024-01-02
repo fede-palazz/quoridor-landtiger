@@ -11,14 +11,6 @@
 #include "lpc17xx.h"
 #include "RIT.h"
 
-//#define INT0 			detectedInputs[0]
-//#define KEY1 			detectedInputs[1]
-//#define KEY2 			detectedInputs[2]
-//#define J_SELECT 	detectedInputs[3]
-//#define J_DOWN 		detectedInputs[4]
-//#define J_LEFT 		detectedInputs[5]
-//#define J_RIGHT 	detectedInputs[6]
-//#define J_UP 			detectedInputs[7]
 
 /*
 *	Inputs order: [Int0, Key1, Key2, J_Select, J_Down, J_Left, J_Right, J_Up]

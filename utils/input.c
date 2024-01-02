@@ -69,3 +69,10 @@ void readJoystickInputs() {
 		}
 	}
 }
+
+void resetDetectedInputs() {
+	int i;
+	for (i=0; i<N_BTN + N_JOYSTICK; i++) {
+		detectedInputs[i].counter = 0;
+	}
+}

@@ -24,6 +24,7 @@
 #include "LPC17xx.h"
 #include "RIT/RIT.h"
 #include "game/game.h"
+#include "utils/input.h"
 #include "timer/timer.h"
 #include "joystick/joystick.h"
 #include "button_EXINT/button.h"
@@ -41,14 +42,16 @@ int main(void)
   BUTTON_init();									/* Buttons Initialization 						*/
 	joystick_init();								/* Joystick Initialization 						*/
 	LCD_Initialization();						/* LCD display Initialization					*/
-	init_RIT(0x004C4B40);						/* RIT Initialization (50 msec)      	*/
-	initGame();
-	
-  enable_RIT();
-
+	init_timer(0, 0x017D7840);			/* Timer0 Initialization (1s)					*/
+	//init_RIT(0x004C4B40);						/* RIT Initialization (50 msec)      	*/
+	//initGame();
+	enable_timer(0);
+	//resetDetectedInputs();
+  //enable_RIT();
   //NVIC_SetPriority(RIT_IRQn, 3);
   // NVIC_SetPriority(TIMER0_IRQn, 2);
   //NVIC_SetPriority(TIMER1_IRQn, 1);
+
 	
 
 	// max 30 chars in a row

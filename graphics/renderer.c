@@ -84,3 +84,16 @@ void drawPlayers(Player p1, Player p2) {
 	drawAvatar(p2.avatar, p2.pos);
 }
 
+void drawInitialLabels() {
+	// Players' barriers
+	GUI_Text(LAT_PADDING + 5, LAT_PADDING + 3, (uint8_t *) "P1 walls: 8", TXT_COLOR, BG_COLOR); 
+	GUI_Text(LAT_PADDING + 132, LAT_PADDING + 3, (uint8_t *) "P2 walls: 8", TXT_COLOR, BG_COLOR); 
+	// Remaining time
+	//GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "0:20", TXT_COLOR, BG_COLOR); 
+	//GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "0:20", TXT_COLOR, BG_COLOR); 
+}
+
+void drawInitialMessage() {
+	// Bottom message
+	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Press INT0 to start the game", TXT_COLOR, BG_COLOR); 
+}

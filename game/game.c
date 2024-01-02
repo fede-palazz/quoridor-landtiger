@@ -27,12 +27,13 @@ static GameStatus gameStatus = WAITING;
 static Player p1, p2;
 
 
-
 void initGame() {
 	//LCD_Clear(BG_COLOR);							/* Set background color 	*/
 	drawBoard(BLACK, NO_COLOR);					/* Board initialization		*/
 	initPlayers();											/* Players initialization	*/
+	drawInitialLabels();
 	drawPlayers(p1, p2);
+	drawInitialMessage();
 }
 
 void initPlayers() {

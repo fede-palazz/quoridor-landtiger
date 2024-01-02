@@ -17,25 +17,26 @@
 #define BOTTOM_BOARD_Y	TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * SQUARE_NUM
 // TODO
 #define BG_COLOR				NO_COLOR
+#define TXT_COLOR				BLACK
 
 /* LCD colors */
-#define Color 				int16_t
-#define WHITE         0xFFFF
-#define BLACK         0x0000
-#define GREY          0xF7DE
-#define BLUE          0x001F
-#define BLUE2         0x051F
-#define RED           0xF800
-#define MAGENTA       0xF81F
-#define GREEN         0x07E0
-#define GREEN_GH			0x8ED7
-#define BLUE_GH				0x8EBB
-#define RED_GH				0xF90A
-#define CYAN          0x7FFF
-#define YELLOW        0xFFE0
-#define DARK_GRAY 		0x4208
-#define TRANSPARENT		0x590C
-#define NO_COLOR      -1
+#define Color 					int16_t
+#define WHITE         	0xFFFF
+#define BLACK         	0x0000
+#define GREY          	0xF7DE
+#define BLUE          	0x001F
+#define BLUE2         	0x051F
+#define RED           	0xF800
+#define MAGENTA       	0xF81F
+#define GREEN         	0x07E0
+#define GREEN_GH				0x8ED7
+#define BLUE_GH					0x8EBB
+#define RED_GH					0xF90A
+#define CYAN          	0x7FFF
+#define YELLOW        	0xFFE0
+#define DARK_GRAY 			0x4208
+#define TRANSPARENT			0x590C
+#define NO_COLOR      	-1
 
 
 #endif
