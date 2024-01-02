@@ -1,4 +1,5 @@
 #include "joystick_handlers.h"
+#include "../graphics/renderer.h"
 
 
 void onJoystickUp() {

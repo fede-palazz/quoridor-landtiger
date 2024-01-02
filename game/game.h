@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../graphics/renderer.h" 
+#include "../graphics/renderer.h"
 
 typedef enum game_status {
     WAITING,

@@ -79,3 +79,8 @@ void drawBoard(Color outlineColor, Color fillColor) {
 	}
 }
 
+void drawPlayers(Player p1, Player p2) {
+	drawAvatar(p1.avatar, p1.pos);
+	drawAvatar(p2.avatar, p2.pos);
+}
+

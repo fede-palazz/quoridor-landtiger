@@ -2,6 +2,7 @@
 #define INPUT_H
 
 #include "../utils/datatypes.h"
+#include "joystick_handlers.h"
 #include "button_handlers.h"
 #include "button_utils.h"
 #include "lpc17xx.h"

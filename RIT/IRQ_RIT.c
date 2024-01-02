@@ -20,6 +20,9 @@
 //#define J_RIGHT 	detectedInputs[6]
 //#define J_UP 			detectedInputs[7]
 
+/*
+*	Inputs order: [Int0, Key1, Key2, J_Select, J_Down, J_Left, J_Right, J_Up]
+*/
 extern volatile Input detectedInputs[];
 int i;
 Input input;
@@ -41,7 +44,7 @@ void RIT_IRQHandler(void) {
 	// Scan buttons values
 	for (i=0; i<N_BTN; i++) {
 		input = detectedInputs[i];
-		if (input.counter > 1) {
+		if (input.counter == 2) {			/* Avoid long pressures */
 			// Button has been pressed
 			switch(input.key) {
 				case Int0:
@@ -58,12 +61,35 @@ void RIT_IRQHandler(void) {
 			}
 		}
 	}
-	
-	// TODO: scan joystick values
-
-  disable_RIT();
+	// Scan joystick values
+	for (i=N_BTN; i<N_BTN + N_JOYSTICK; i++) {
+		input = detectedInputs[i];
+		if (input.counter == 1) {			/* Avoid long pressures */
+			// Joystick has been used
+			switch(input.key) {
+				case J_Select:
+					onJoystickSelect();			/* Handle Select Pressure */
+					break;
+				case J_Down:
+					onJoystickDown();				/* Handle Joystick Down */
+					break;
+				case J_Left:
+					onJoystickLeft();				/* Handle Joystick Left */
+					break;
+				case J_Right:
+					onJoystickRight();			/* Handle Joystick Right */
+					break;
+				case J_Up:
+					onJoystickUp();					/* Handle Joystick Up */
+					break;
+				default:
+					break;
+			}
+		}
+	}
+  //disable_RIT();
   reset_RIT();
-  enable_RIT();
+  //enable_RIT();
   LPC_RIT->RICTRL |= 0x1; /* clear interrupt flag */
 }
 

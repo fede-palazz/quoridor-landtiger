@@ -1,8 +1,6 @@
 #include "game.h"
-#include "../entities/player.h"
 
 void initPlayers(void);
-void drawPlayers(void);
 
 /*
 	Convention:
@@ -34,7 +32,7 @@ void initGame() {
 	//LCD_Clear(BG_COLOR);							/* Set background color 	*/
 	drawBoard(BLACK, NO_COLOR);					/* Board initialization		*/
 	initPlayers();											/* Players initialization	*/
-	drawPlayers();
+	drawPlayers(p1, p2);
 }
 
 void initPlayers() {
@@ -44,13 +42,5 @@ void initPlayers() {
 	initPlayer(&p2, initialPosP2, RED_GH);
 }
 
-
-/*******************
-** DRAW FUNCTIONS **
-********************/
-void drawPlayers() {
-	drawAvatar(p1.avatar, p1.pos);
-	drawAvatar(p2.avatar, p2.pos);
-}
 
 
