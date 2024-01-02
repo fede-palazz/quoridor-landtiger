@@ -16,6 +16,7 @@
 ".\button_handlers.o"
 ".\button_utils.o"
 ".\input.o"
+".\joystick_handlers.o"
 ".\lib_joystick.o"
 ".\irq_rit.o"
 ".\lib_rit.o"

@@ -583,6 +583,16 @@
               <FileType>5</FileType>
               <FilePath>.\utils\input.h</FilePath>
             </File>
+            <File>
+              <FileName>joystick_handlers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\utils\joystick_handlers.c</FilePath>
+            </File>
+            <File>
+              <FileName>joystick_handlers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\utils\joystick_handlers.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

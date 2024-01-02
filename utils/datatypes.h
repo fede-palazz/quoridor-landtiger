@@ -11,15 +11,14 @@ typedef struct coordinate
 
 typedef enum input_key
 {
-	None = -1,
-	JoystickButton,
-	JoystickDown,
-	JoystickLeft,
-	JoystickRight,
-	JoystickUp,
 	Int0,
 	Key1,
-	Key2
+	Key2,
+	J_Select,
+	J_Down,
+	J_Left,
+	J_Right,
+	J_Up
 } InputKey;
 
 typedef enum input_action
@@ -32,6 +31,7 @@ typedef struct input
 {
 	InputKey key;
 	InputAction action;
+	uint16_t counter;
 } Input;
 	
 #endif
