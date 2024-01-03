@@ -1,15 +1,16 @@
 #include "renderer.h"
 
+/*
+*	Return base 7 LCD coordinates of a square without borders
+*/
 Coordinate getSquarePositionLCD(Coordinate squarePos) {
 	Coordinate pos;
 	// Convert base 13 coordinates into base 7
 	squarePos.x /= 2;
 	squarePos.y /= 2;
-	
 	// Calculate initial position on screen
 	pos.x = LAT_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.x + SQUARE_BORDERS;
 	pos.y = TOP_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.y + SQUARE_BORDERS;
-	
 	return pos;
 }
 
@@ -28,7 +29,7 @@ void drawRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color fillC
 		lineNum	= p1.y + 1;
 		while (lineNum != p2.y) {
 			LCD_DrawLine(p1.x + 1, lineNum, p2.x - 1, lineNum, fillColor);
-			lineNum += 1;
+			lineNum++;
 		}
 	}
 }
@@ -38,11 +39,11 @@ void drawThickRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color 
 	// Draw thick border
 	while (i < thicknessPx - 1) {
 		drawRectangle(p1, p2, outlineColor, NO_COLOR);
-		p1.x += 1;
-		p1.y += 1;
-		p2.x -= 1;
-		p2.y -= 1;
-		i += 1;
+		p1.x++;
+		p1.y++;
+		p2.x--;
+		p2.y--;
+		i++;
 	}
 	// Fill the rectangle
 	drawRectangle(p1, p2, outlineColor, fillColor);
@@ -59,16 +60,12 @@ void fillSquare(Coordinate squarePos, Color color) {
 void drawAvatar(Avatar avatar, Coordinate squarePos) {
 	int row, col;
 	Coordinate pos = getSquarePositionLCD(squarePos);
-	
 	// Draw avatar
-	for (row=0; row<AVATAR_SIZE; row++) {
-		for (col=0; col<AVATAR_SIZE; col++) {
+	for (row=0; row<AVATAR_SIZE; row++)
+		for (col=0; col<AVATAR_SIZE; col++)
 			// If pixel should be coloured
-			if (avatar.pixelData[row][col]) {
+			if (avatar.pixelData[row][col])
 				LCD_SetPoint(pos.x + col, pos.y + row, avatar.color);
-			}
-		}
-	}
 }
 
 void drawBoard(Color outlineColor, Color fillColor) {
@@ -100,12 +97,14 @@ void drawInitialLabels() {
 	// Players' barriers
 	GUI_Text(LAT_PADDING + 5, LAT_PADDING + 3, (uint8_t *) "P1 walls: 8", TXT_COLOR, BG_COLOR); 
 	GUI_Text(LAT_PADDING + 132, LAT_PADDING + 3, (uint8_t *) "P2 walls: 8", TXT_COLOR, BG_COLOR); 
-	// Remaining time
-	//GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "0:20", TXT_COLOR, BG_COLOR); 
-	//GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "0:20", TXT_COLOR, BG_COLOR); 
 }
 
 void drawInitialMessage() {
 	// Bottom message
 	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Press INT0 to start the game", TXT_COLOR, BG_COLOR); 
+}
+
+void hideInitialMessage() {
+	// TODO: substitute WHITE with BG_COLOR
+	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Press INT0 to start the game", WHITE, BG_COLOR); 
 }

@@ -25,7 +25,9 @@ static uint8_t board[BOARD_SIZE][BOARD_SIZE] = {
 };
 volatile Game game;
 static Player p1, p2;
-static Coordinate possibleMoves[4];
+static Player* currentPlayer;
+volatile Coordinate possibleMoves[4];
+static int8_t selectedSquare = -1;
 
 
 void initGame() {
@@ -39,10 +41,13 @@ void initGame() {
 }
 
 void initPlayers() {
+	/* Set players' coordinates */
 	Coordinate initialPosP1 = {6, 12};
 	Coordinate initialPosP2 = {6, 0};
 	initPlayer(&p1, initialPosP1, GREEN_GH);
 	initPlayer(&p2, initialPosP2, RED_GH);
+	/* Update current player */
+	currentPlayer = &p1;
 }
 
 uint8_t isValidSquare(Coordinate squarePos) {
@@ -90,18 +95,18 @@ void findPossibileMoves(Coordinate startPos) {
 				middlePos.x = startPos.x;
 				middlePos.y = startPos.y + 1;
 				break;
-			case MOV_RIGHT:
-				/* Check RIGHT square */
-				endPos.x = startPos.x + 2;
-				endPos.y = startPos.y;
-				middlePos.x = startPos.x + 1;
-				middlePos.y = startPos.y;
-				break;
 			case MOV_LEFT:
 				/* Check LEFT square */
 				endPos.x = startPos.x - 2;
 				endPos.y = startPos.y;
 				middlePos.x = startPos.x - 1;
+				middlePos.y = startPos.y;
+				break;
+			case MOV_RIGHT:
+				/* Check RIGHT square */
+				endPos.x = startPos.x + 2;
+				endPos.y = startPos.y;
+				middlePos.x = startPos.x + 1;
 				middlePos.y = startPos.y;
 				break;
 		}
@@ -118,21 +123,44 @@ void findPossibileMoves(Coordinate startPos) {
 	}
 }
 
+/*
+*	Highlight possible moves that a player can perform
+*/
 void highlightSquares() {
 	int i = 0;
-	if (game.turn == 1) {
-		/* Highlight P1 possibile moves */
-			findPossibileMoves(p1.pos);
-	}
-	else {
-		/* Highlight P2 possibile moves */
-		findPossibileMoves(p2.pos);
-	}
+	findPossibileMoves((*currentPlayer).pos);		/* Search possibile moves from player's current position */
+	
 	for (i=0; i<4; i++) {		
-		if (possibleMoves[i].x < BOARD_SIZE) /* Highlight only valid squares */
+		if (possibleMoves[i].x < BOARD_SIZE) 			/* Highlight only valid squares */
 			fillSquare(possibleMoves[i], HIGHLIGHT_COLOR);
 	}
 }
 
+/*
+* Select a square when the player moves the joystick
+*/
+void selectSquare(Movement movement) {
+	if (!isValidSquare(possibleMoves[movement]))
+		return;
+	fillSquare(possibleMoves[movement], SELECT_COLOR);
+	if (selectedSquare != -1)
+		fillSquare(possibleMoves[selectedSquare], HIGHLIGHT_COLOR);			/* Repaint old selected square 			 */
+	selectedSquare = movement;		/* Save selected square index */
+}
+
+void skipTurn() {
+	if (game.turn == 1) {
+		/* Switch to 2nd player */
+		currentPlayer = &p2;
+		game.turn = 2;
+	}
+	else {
+		/* Switch to 1st player */
+		currentPlayer = &p1;
+		game.turn = 1;
+	}
+	game.countdown = 20;
+	selectedSquare = -1;
+}
 
 

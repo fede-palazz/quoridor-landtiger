@@ -17,6 +17,8 @@
 #define BOTTOM_BOARD_Y		TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * SQUARE_NUM
 // TODO
 #define BG_COLOR					NO_COLOR
+#define SQUARE_COLOR			WHITE
+#define BORDER_COLOR			BLACK
 #define TXT_COLOR					BLACK
 
 /* GAME CONFIG						*/
@@ -44,6 +46,7 @@
 #define DARK_GRAY 				0x4208
 #define TRANSPARENT				0x590C
 #define HIGHLIGHT_COLOR		YELLOW
+#define SELECT_COLOR			GREEN
 #define NO_COLOR      		-1
 
 

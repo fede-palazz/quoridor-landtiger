@@ -7,6 +7,7 @@
 
 void onPressInt0() {
 	if (game.status == WAITING) {		/* Game has to start */
+		disableInputDetection();
 		/* Game initialization */
 		game.status = STARTED;
 		game.turn = 1;
@@ -16,6 +17,8 @@ void onPressInt0() {
 		/* Start countdown */
 		reset_timer(0);
 		enable_timer(0);
+		hideInitialMessage();
+		enableInputDetection();
 	}
 }
 

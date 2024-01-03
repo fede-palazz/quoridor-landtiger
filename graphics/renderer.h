@@ -17,5 +17,6 @@ extern void drawBoard(Color outlineColor, Color fillColor);
 extern void drawPlayers(Player p1, Player p2);
 extern void drawInitialLabels(void);
 extern void drawInitialMessage(void);
+extern void hideInitialMessage(void);
 
 #endif

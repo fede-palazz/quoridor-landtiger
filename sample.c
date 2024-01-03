@@ -37,17 +37,17 @@ extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emul
 
 
 int main(void)
-{ 
+{
   SystemInit();  									/* System Initialization (i.e., PLL)  */
   BUTTON_init();									/* Buttons Initialization 						*/
 	joystick_init();								/* Joystick Initialization 						*/
 	LCD_Initialization();						/* LCD display Initialization					*/
 	init_timer(0, 0x017D7840);			/* Timer0 Initialization (1s)					*/
 	init_RIT(0x004C4B40);						/* RIT Initialization (50 ms)       	*/
+	disableInputDetection();
 	initGame();
-	//enable_timer(0);
 	resetDetectedInputs();
-  enable_RIT();
+  enableInputDetection();
   //NVIC_SetPriority(RIT_IRQn, 3);
   // NVIC_SetPriority(TIMER0_IRQn, 2);
   //NVIC_SetPriority(TIMER1_IRQn, 1);

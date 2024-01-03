@@ -32,21 +32,23 @@ void TIMER0_IRQHandler (void)
 	Color color = TXT_COLOR;
 	disableInputDetection();			/* Disable RIT and buttons */
 
-	if (game.countdown > 20)				/* Underflow condition */
-		return;
+//	if (game.countdown > 20)				/* Underflow condition */
+//		return;
 	if (game.countdown == 20) {
 		/* A new turn has started	*/
 		if (game.turn == 1)						/* Override P2 timer */
-			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, countDownBuffer, BG_COLOR, BG_COLOR);
+			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "    ", BG_COLOR, BG_COLOR);
 		else
-			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, countDownBuffer, BG_COLOR, BG_COLOR);
+			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "    ", BG_COLOR, BG_COLOR);
 	}
 	/* Zero padding if counter < 10 */
 	if (game.countdown < 10) {
+		/* Convert countdown value into char array */
 		sprintf((char *)countDownBuffer, "0:0%d", game.countdown--);
 		color = RED_GH;
 	}
 	else {
+		/* Convert countdown value into char array */
 		sprintf((char *)countDownBuffer, "0:%d", game.countdown--);
 	}
 	/* Print countdown */
@@ -55,6 +57,13 @@ void TIMER0_IRQHandler (void)
 	else
 		GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, countDownBuffer, color, BG_COLOR);
   
+	if (game.countdown == 0) {
+		/* Current turn is finished	*/
+		disable_timer(0);
+		reset_timer(0);
+		skipTurn();
+		enable_timer(0);
+	}
 	enableInputDetection();				/* Enable RIT and buttons */
 	LPC_TIM0->IR = 1;							/* Clear interrupt flag */
 }

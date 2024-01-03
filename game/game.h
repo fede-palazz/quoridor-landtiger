@@ -23,9 +23,11 @@ typedef enum movement {
 } Movement;
 
 extern volatile Game game;
-
+extern volatile Coordinate possibleMoves[];
 
 extern void initGame(void);
 extern void highlightSquares(void);
+extern void selectSquare(Movement movement);
+extern void skipTurn();
 
 #endif
