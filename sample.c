@@ -43,11 +43,11 @@ int main(void)
 	joystick_init();								/* Joystick Initialization 						*/
 	LCD_Initialization();						/* LCD display Initialization					*/
 	init_timer(0, 0x017D7840);			/* Timer0 Initialization (1s)					*/
-	//init_RIT(0x004C4B40);						/* RIT Initialization (50 msec)      	*/
-	//initGame();
-	enable_timer(0);
-	//resetDetectedInputs();
-  //enable_RIT();
+	init_RIT(0x004C4B40);						/* RIT Initialization (50 ms)       	*/
+	initGame();
+	//enable_timer(0);
+	resetDetectedInputs();
+  enable_RIT();
   //NVIC_SetPriority(RIT_IRQn, 3);
   // NVIC_SetPriority(TIMER0_IRQn, 2);
   //NVIC_SetPriority(TIMER1_IRQn, 1);

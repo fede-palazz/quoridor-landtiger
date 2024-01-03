@@ -5,6 +5,7 @@
 #include "joystick_handlers.h"
 #include "button_handlers.h"
 #include "button_utils.h"
+#include "../RIT/RIT.h"
 #include "lpc17xx.h"
 
 #define N_BTN 											3
@@ -17,5 +18,7 @@
 extern volatile Input detectedInputs[];
 extern void updateDetectedInputs(void);
 extern void resetDetectedInputs(void);
+extern void disableInputDetection(void);
+extern void enableInputDetection(void);
 
 #endif

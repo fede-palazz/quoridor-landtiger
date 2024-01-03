@@ -7,9 +7,12 @@
 ** Correlated files:    timer.h
 **--------------------------------------------------------------------------------------------------------
 *********************************************************************************************************/
+
+#include "../graphics/renderer.h"
+#include "../utils/input.h"
+#include "../game/game.h"
 #include "lpc17xx.h"
 #include "timer.h"
-#include "../graphics/renderer.h"
 
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
@@ -20,17 +23,40 @@
 ** Returned value:		None
 **
 ******************************************************************************/
-static int counter = 0;
-uint8_t buffer[10];
 
-    // Converte il numero in una stringa di caratteri usando sprintf
+uint8_t countDownBuffer[10];
     
 
 void TIMER0_IRQHandler (void)
 {
-	sprintf((char *)buffer, "%d", counter++);						/* Convert number to char array */
-	GUI_Text(30,50,(uint8_t *) buffer, BLACK, WHITE);
-  LPC_TIM0->IR = 1;			/* clear interrupt flag */
+	Color color = TXT_COLOR;
+	disableInputDetection();			/* Disable RIT and buttons */
+
+	if (game.countdown > 20)				/* Underflow condition */
+		return;
+	if (game.countdown == 20) {
+		/* A new turn has started	*/
+		if (game.turn == 1)						/* Override P2 timer */
+			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, countDownBuffer, BG_COLOR, BG_COLOR);
+		else
+			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, countDownBuffer, BG_COLOR, BG_COLOR);
+	}
+	/* Zero padding if counter < 10 */
+	if (game.countdown < 10) {
+		sprintf((char *)countDownBuffer, "0:0%d", game.countdown--);
+		color = RED_GH;
+	}
+	else {
+		sprintf((char *)countDownBuffer, "0:%d", game.countdown--);
+	}
+	/* Print countdown */
+	if (game.turn == 1)
+		GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, countDownBuffer, color, BG_COLOR);
+	else
+		GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, countDownBuffer, color, BG_COLOR);
+  
+	enableInputDetection();				/* Enable RIT and buttons */
+	LPC_TIM0->IR = 1;							/* Clear interrupt flag */
 }
 
 

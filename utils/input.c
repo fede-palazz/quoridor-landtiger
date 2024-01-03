@@ -17,10 +17,35 @@ volatile Input detectedInputs[N_BTN + N_JOYSTICK] = {
 };
 
 
+void disableAllBtn() {
+	int i;
+	for (i=0; i<N_BTN; i++) {
+		disableBtn(i);
+	}
+}
+
+void enableAllBtn() {
+	int i;
+	for (i=0; i<N_BTN; i++) {
+		enableBtn(i);
+	}
+}
+
 void updateDetectedInputs()
 {
 	readButtonsInputs();
 	readJoystickInputs();
+}
+
+void disableInputDetection() {
+	disable_RIT();
+	reset_RIT();
+	disableAllBtn();
+}
+
+void enableInputDetection() {
+	enable_RIT();
+	enableAllBtn();
 }
 
 void readButtonsInputs() {

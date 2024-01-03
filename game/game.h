@@ -9,13 +9,23 @@ typedef enum game_status {
     FINISHED
 } GameStatus;
 
+typedef struct game {
+	GameStatus status;
+	uint8_t turn;
+	uint8_t countdown;
+} Game;
+
 typedef enum movement {
-	MOVE_UP,
-	MOVE_DOWN,
-	MOVE_LEFT,
-	MOVE_RIGHT
+	MOV_UP,
+	MOV_DOWN,
+	MOV_LEFT,
+	MOV_RIGHT
 } Movement;
 
-void initGame(void);
+extern volatile Game game;
+
+
+extern void initGame(void);
+extern void highlightSquares(void);
 
 #endif
