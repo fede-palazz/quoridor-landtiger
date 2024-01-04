@@ -16,7 +16,7 @@
 #define SQUARE_LENGTH 		(LCD_WIDTH - LAT_PADDING * 2 - (INT_PADDING * (SQUARE_NUM - 1))) / SQUARE_NUM
 #define BOTTOM_BOARD_Y		TOP_PADDING + (SQUARE_LENGTH + INT_PADDING) * SQUARE_NUM
 // TODO
-#define BG_COLOR					NO_COLOR
+#define BG_COLOR					WHITE
 #define SQUARE_COLOR			WHITE
 #define BORDER_COLOR			BLACK
 #define TXT_COLOR					BLACK
@@ -27,9 +27,10 @@
 #define EMPTY_SQUARE			0
 #define PLAYER_SQUARE			1
 #define BARRIER_SQUARE		2
+#define INITIAL_TURN			1
 
 /* LCD colors */
-#define Color 						int16_t
+#define Color 						uint16_t
 #define WHITE         		0xFFFF
 #define BLACK         		0x0000
 #define GREY          		0xF7DE
@@ -47,7 +48,7 @@
 #define TRANSPARENT				0x590C
 #define HIGHLIGHT_COLOR		YELLOW
 #define SELECT_COLOR			GREEN
-#define NO_COLOR      		-1
+#define NO_COLOR      		0xCCCC
 
 
 #endif

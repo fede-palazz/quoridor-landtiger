@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "../graphics/renderer.h"
+#include "../utils/input.h"
 
 typedef enum game_status {
     WAITING,
@@ -24,10 +25,11 @@ typedef enum movement {
 
 extern volatile Game game;
 extern volatile Coordinate possibleMoves[];
+extern volatile uint8_t board[BOARD_SIZE][BOARD_SIZE];
 
 extern void initGame(void);
 extern void highlightSquares(void);
 extern void selectSquare(Movement movement);
-extern void skipTurn();
+extern void startNewTurn(void);
 
 #endif

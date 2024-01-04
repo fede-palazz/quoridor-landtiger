@@ -9,7 +9,7 @@
 *********************************************************************************************************/
 
 #include "../graphics/renderer.h"
-#include "../utils/input.h"
+//#include "../utils/input.h"
 #include "../game/game.h"
 #include "lpc17xx.h"
 #include "timer.h"
@@ -30,26 +30,25 @@ uint8_t countDownBuffer[10];
 void TIMER0_IRQHandler (void)
 {
 	Color color = TXT_COLOR;
-	disableInputDetection();			/* Disable RIT and buttons */
+	disableInputDetection();				/* Disable RIT and buttons */
 
-//	if (game.countdown > 20)				/* Underflow condition */
-//		return;
-	if (game.countdown == 20) {
+	if (game.countdown == COUNTDOWN_TIME_S) {
 		/* A new turn has started	*/
+		// TODO: Substitute WHITE with BG_COLOR
 		if (game.turn == 1)						/* Override P2 timer */
-			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "    ", BG_COLOR, BG_COLOR);
+			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "    ", WHITE, WHITE);
 		else
-			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "    ", BG_COLOR, BG_COLOR);
+			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "    ", WHITE, WHITE);
 	}
 	/* Zero padding if counter < 10 */
 	if (game.countdown < 10) {
 		/* Convert countdown value into char array */
-		sprintf((char *)countDownBuffer, "0:0%d", game.countdown--);
+		sprintf((char *)countDownBuffer, "0:0%d", game.countdown);
 		color = RED_GH;
 	}
 	else {
 		/* Convert countdown value into char array */
-		sprintf((char *)countDownBuffer, "0:%d", game.countdown--);
+		sprintf((char *)countDownBuffer, "0:%d", game.countdown);
 	}
 	/* Print countdown */
 	if (game.turn == 1)
@@ -61,9 +60,12 @@ void TIMER0_IRQHandler (void)
 		/* Current turn is finished	*/
 		disable_timer(0);
 		reset_timer(0);
-		skipTurn();
+		game.countdown = COUNTDOWN_TIME_S;
 		enable_timer(0);
+		startNewTurn();
 	}
+	else
+		game.countdown--;
 	enableInputDetection();				/* Enable RIT and buttons */
 	LPC_TIM0->IR = 1;							/* Clear interrupt flag */
 }

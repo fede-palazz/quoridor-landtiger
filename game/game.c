@@ -1,32 +1,23 @@
 #include "game.h"
 
+void initGame(void);
 void initPlayers(void);
+void findPossibileMoves(Coordinate startPos);
+void highlightSquares(void);
+void clearHighlightedSquares(void);
+void selectSquare(Movement movement);
+void startNewTurn(void);
 
-/*
-	Convention:
-	 - "0" -> nothing there
-	 - "1" -> player
-	 - "2" -> barrier
-*/
-static uint8_t board[BOARD_SIZE][BOARD_SIZE] = {
-	{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-};
+
 volatile Game game;
 static Player p1, p2;
 static Player* currentPlayer;
-volatile Coordinate possibleMoves[4];
+volatile Coordinate possibleMoves[4] = { 
+	{BOARD_SIZE, BOARD_SIZE}, 
+	{BOARD_SIZE, BOARD_SIZE}, 
+	{BOARD_SIZE, BOARD_SIZE}, 
+	{BOARD_SIZE, BOARD_SIZE}
+};
 static int8_t selectedSquare = -1;
 
 
@@ -47,34 +38,14 @@ void initPlayers() {
 	initPlayer(&p1, initialPosP1, GREEN_GH);
 	initPlayer(&p2, initialPosP2, RED_GH);
 	/* Update current player */
-	currentPlayer = &p1;
+	currentPlayer = INITIAL_TURN == 1 ? &p1 : &p2;
 }
 
-uint8_t isValidSquare(Coordinate squarePos) {
-	if (squarePos.x < BOARD_SIZE && squarePos.y < BOARD_SIZE)
-		return 1;
-	return 0;
-}
-
-uint8_t isEmptySquare(Coordinate squarePos) {
-	if (board[squarePos.y][squarePos.x] == EMPTY_SQUARE)
-		return 1;
-	return 0;
-}
-
-uint8_t isPlayerSquare(Coordinate squarePos) {
-	if (board[squarePos.y][squarePos.x] == PLAYER_SQUARE)
-		return 1;
-	return 0;
-}
-
-uint8_t isBarrierSquare(Coordinate squarePos) {
-	if (board[squarePos.y][squarePos.x] == BARRIER_SQUARE)
-		return 1;
-	return 0;
-}
-
+/*
+* Search for available squares
+*/
 void findPossibileMoves(Coordinate startPos) {
+	// TODO: add check for other player
 	int i;
 	Coordinate endPos;
 	Coordinate middlePos;
@@ -127,12 +98,23 @@ void findPossibileMoves(Coordinate startPos) {
 *	Highlight possible moves that a player can perform
 */
 void highlightSquares() {
-	int i = 0;
+	int i;
 	findPossibileMoves((*currentPlayer).pos);		/* Search possibile moves from player's current position */
 	
 	for (i=0; i<4; i++) {		
-		if (possibleMoves[i].x < BOARD_SIZE) 			/* Highlight only valid squares */
+		if (isValidSquare(possibleMoves[i])) 			/* Highlight only valid squares */
 			fillSquare(possibleMoves[i], HIGHLIGHT_COLOR);
+	}
+}
+
+/*
+*	Restore previous squares color
+*/
+void clearHighlightedSquares() {
+	int i;
+	for (i=0; i<4; i++) {		
+		if (isValidSquare(possibleMoves[i]) && i != selectedSquare) 			/* Highlight only valid squares */
+			fillSquare(possibleMoves[i], SQUARE_COLOR);
 	}
 }
 
@@ -148,7 +130,9 @@ void selectSquare(Movement movement) {
 	selectedSquare = movement;		/* Save selected square index */
 }
 
-void skipTurn() {
+void startNewTurn() {
+	disableInputDetection();
+	/* Change turn settings */
 	if (game.turn == 1) {
 		/* Switch to 2nd player */
 		currentPlayer = &p2;
@@ -159,8 +143,11 @@ void skipTurn() {
 		currentPlayer = &p1;
 		game.turn = 1;
 	}
-	game.countdown = 20;
+	//game.countdown = COUNTDOWN_TIME_S;
+	/* Eventually repaint highlighted squares */
+	clearHighlightedSquares();
 	selectedSquare = -1;
+	highlightSquares();
 }
 
 

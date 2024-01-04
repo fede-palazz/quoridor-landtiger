@@ -10,7 +10,7 @@ void onPressInt0() {
 		disableInputDetection();
 		/* Game initialization */
 		game.status = STARTED;
-		game.turn = 1;
+		game.turn = INITIAL_TURN;
 		game.countdown = COUNTDOWN_TIME_S;
 		/* Highlights Player possibile moves */
 		highlightSquares();

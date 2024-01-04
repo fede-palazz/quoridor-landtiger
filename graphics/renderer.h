@@ -7,6 +7,7 @@
 #include "../utils/datatypes.h"
 #include "../entities/avatar.h"
 #include "../entities/player.h"
+#include "../entities/board.h"
 
 
 extern void drawRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color fillColor);

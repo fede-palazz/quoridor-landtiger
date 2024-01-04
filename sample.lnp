@@ -23,6 +23,7 @@
 ".\game.o"
 ".\avatar.o"
 ".\player.o"
+".\board.o"
 ".\renderer.o"
 --strict --scatter ".\sample.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
