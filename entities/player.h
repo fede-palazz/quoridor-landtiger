@@ -9,6 +9,7 @@
 typedef struct Player {
 	Avatar avatar;
 	Coordinate pos;
+	Coordinate previousPos;
 } Player;
 
 extern void initPlayer(Player* player, Coordinate pos, Color color);

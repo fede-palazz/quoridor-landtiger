@@ -11,14 +11,14 @@ void startNewTurn(void);
 
 volatile Game game;
 static Player p1, p2;
-static Player* currentPlayer;
+Player* currentPlayer;
 volatile Coordinate possibleMoves[4] = { 
 	{BOARD_SIZE, BOARD_SIZE}, 
 	{BOARD_SIZE, BOARD_SIZE}, 
 	{BOARD_SIZE, BOARD_SIZE}, 
 	{BOARD_SIZE, BOARD_SIZE}
 };
-static int8_t selectedSquare = -1;
+volatile int8_t selectedSquare = -1;
 
 
 void initGame() {
@@ -27,7 +27,7 @@ void initGame() {
 	drawBoard(BLACK, NO_COLOR);					/* Board initialization		*/
 	initPlayers();											/* Players initialization	*/
 	drawInitialLabels();
-	drawPlayers(p1, p2);
+	drawPlayers(&p1, &p2);
 	drawInitialMessage();
 }
 
@@ -37,6 +37,7 @@ void initPlayers() {
 	Coordinate initialPosP2 = {6, 0};
 	initPlayer(&p1, initialPosP1, GREEN_GH);
 	initPlayer(&p2, initialPosP2, RED_GH);
+	initBoard(initialPosP1, initialPosP2);
 	/* Update current player */
 	currentPlayer = INITIAL_TURN == 1 ? &p1 : &p2;
 }
@@ -49,9 +50,9 @@ void findPossibileMoves(Coordinate startPos) {
 	int i;
 	Coordinate endPos;
 	Coordinate middlePos;
-	
+	/* Compute end and middle positions */
 	for (i=0; i<4; i++) {
-		switch((Movement) i) {		/* Compute end and middle positions */
+		switch((Movement) i) {		
 			case MOV_UP:
 				/* Check UP square */
 				endPos.x = startPos.x;
@@ -82,7 +83,9 @@ void findPossibileMoves(Coordinate startPos) {
 				break;
 		}
 		/* Check if move can be made */
-		if (isValidSquare(endPos) && isEmptySquare(endPos) && !isBarrierSquare(middlePos)) {
+		if (isValidSquare(endPos) && 
+				isEmptySquare(endPos) && 
+				!isBarrierSquare(middlePos)) {
 			possibleMoves[i].x = endPos.x;
 			possibleMoves[i].y = endPos.y;
 		}
@@ -113,7 +116,7 @@ void highlightSquares() {
 void clearHighlightedSquares() {
 	int i;
 	for (i=0; i<4; i++) {		
-		if (isValidSquare(possibleMoves[i]) && i != selectedSquare) 			/* Highlight only valid squares */
+		if (isValidSquare(possibleMoves[i])) 			/* Highlight only valid squares */
 			fillSquare(possibleMoves[i], SQUARE_COLOR);
 	}
 }
@@ -124,10 +127,10 @@ void clearHighlightedSquares() {
 void selectSquare(Movement movement) {
 	if (!isValidSquare(possibleMoves[movement]))
 		return;
-	fillSquare(possibleMoves[movement], SELECT_COLOR);
 	if (selectedSquare != -1)
-		fillSquare(possibleMoves[selectedSquare], HIGHLIGHT_COLOR);			/* Repaint old selected square 			 */
-	selectedSquare = movement;		/* Save selected square index */
+		fillSquare(possibleMoves[selectedSquare], HIGHLIGHT_COLOR);			/* Repaint old selected square   */
+	fillSquare(possibleMoves[movement], SELECT_COLOR);								/* Highlight new selected square */
+	selectedSquare = movement;																				/* Save selected square index 	 */
 }
 
 void startNewTurn() {
@@ -143,11 +146,20 @@ void startNewTurn() {
 		currentPlayer = &p1;
 		game.turn = 1;
 	}
-	//game.countdown = COUNTDOWN_TIME_S;
-	/* Eventually repaint highlighted squares */
-	clearHighlightedSquares();
-	selectedSquare = -1;
-	highlightSquares();
+	selectedSquare = -1;							/* Reset selected square value 			*/
+	highlightSquares();								/* Highlight other player's squares */
+	enableInputDetection();
 }
+
+void movePlayer() {
+	/* Update player position */
+	setPlayerPos(currentPlayer, possibleMoves[selectedSquare].x, possibleMoves[selectedSquare].y);
+	/* Update board status */
+	updateBoardPlayer(currentPlayer);
+	/* Draw player in new position */
+	drawNewPlayerPos(currentPlayer);
+}
+
+
 
 

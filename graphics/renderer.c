@@ -88,9 +88,16 @@ void drawBoard(Color outlineColor, Color fillColor) {
 	}
 }
 
-void drawPlayers(Player p1, Player p2) {
-	drawAvatar(p1.avatar, p1.pos);
-	drawAvatar(p2.avatar, p2.pos);
+void drawPlayers(Player* p1, Player* p2) {
+	drawAvatar(p1->avatar, p1->pos);
+	drawAvatar(p2->avatar, p2->pos);
+}
+
+void drawNewPlayerPos(Player* p) {
+	/* Hide avatar in current player position */
+	fillSquare(p->previousPos, SQUARE_COLOR);
+	/* Draw avatar in new position */
+	drawAvatar(p->avatar, p->pos);
 }
 
 void drawInitialLabels() {

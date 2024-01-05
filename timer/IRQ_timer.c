@@ -56,12 +56,14 @@ void TIMER0_IRQHandler (void)
 	else
 		GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, countDownBuffer, color, BG_COLOR);
   
+	/* When time is expired */
 	if (game.countdown == 0) {
 		/* Current turn is finished	*/
 		disable_timer(0);
 		reset_timer(0);
 		game.countdown = COUNTDOWN_TIME_S;
 		enable_timer(0);
+		clearHighlightedSquares();
 		startNewTurn();
 	}
 	else
