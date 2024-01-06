@@ -6,7 +6,8 @@
 
 typedef enum game_status {
     WAITING,
-    STARTED,
+    MOVING,
+		PLACING,
     FINISHED
 } GameStatus;
 

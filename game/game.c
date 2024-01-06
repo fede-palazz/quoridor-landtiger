@@ -87,7 +87,7 @@ void findPossibileMoves(Coordinate startPos) {
 					possibleMoves[i].x = endPos.x;
 					possibleMoves[i].y = endPos.y;
 				}
-				else {		/* There is a player */
+				else {														/* There is a player */
 					/* Increase both middle and end positions */
 					switch ((Movement) i) {
 						case MOV_UP:

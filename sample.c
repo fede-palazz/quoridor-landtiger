@@ -35,6 +35,9 @@
 extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emulator to find the symbol (can be placed also inside system_LPC17xx.h but since it is RO, it needs more work)
 #endif
 
+Barrier b1 = {GREEN_GH, {7,5}, HORIZONTAL};
+Barrier b2 = {BLUE_GH, {5,5}, VERTICAL};
+Barrier b3 = {BLUE_GH, {9,4}, VERTICAL};
 
 int main(void)
 {

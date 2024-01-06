@@ -2,35 +2,35 @@
 
 
 void onJoystickLeft() {
-	if (game.status == STARTED && game.countdown > 0) {
+	if (game.status == MOVING && game.countdown > 0) {
 		if (selectedSquare != MOV_LEFT)
 			selectSquare(MOV_LEFT);							/* Move current player left */
 	}
 }
 
 void onJoystickUp() {
-	if (game.status == STARTED && game.countdown > 0) {
+	if (game.status == MOVING && game.countdown > 0) {
 		if (selectedSquare != MOV_UP)
 			selectSquare(MOV_UP);								/* Move current player up */
 	}
 }
 	
 void onJoystickDown() {
-	if (game.status == STARTED && game.countdown > 0) {
+	if (game.status == MOVING && game.countdown > 0) {
 		if (selectedSquare != MOV_DOWN)
 			selectSquare(MOV_DOWN);							/* Move current player down */
 	}
 }
 	
 void onJoystickRight() {
-	if (game.status == STARTED && game.countdown > 0) {
+	if (game.status == MOVING && game.countdown > 0) {
 		if (selectedSquare != MOV_RIGHT)
 			selectSquare(MOV_RIGHT);						/* Move current player right */
 	}
 }
 	
 void onJoystickSelect() {
-  	if (game.status == STARTED && game.countdown > 0) {
+  	if (game.status == MOVING && game.countdown > 0) {
 		disableInputDetection();
 		/* Check if player needs to be moved*/
 		if (selectedSquare != -1) {

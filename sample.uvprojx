@@ -663,6 +663,11 @@
               <FileType>5</FileType>
               <FilePath>.\entities\board.h</FilePath>
             </File>
+            <File>
+              <FileName>barrier.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\entities\barrier.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -3,14 +3,31 @@
 /*
 *	Return base 7 LCD coordinates of a square without borders
 */
-Coordinate getSquarePositionLCD(Coordinate squarePos) {
+Coordinate getSquarePositionLCD(Coordinate squarePos, uint8_t excludeBorders) {
 	Coordinate pos;
 	// Convert base 13 coordinates into base 7
 	squarePos.x /= 2;
 	squarePos.y /= 2;
 	// Calculate initial position on screen
-	pos.x = LAT_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.x + SQUARE_BORDERS;
-	pos.y = TOP_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.y + SQUARE_BORDERS;
+	if (excludeBorders) {
+		pos.x = LAT_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.x + SQUARE_BORDERS;
+		pos.y = TOP_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.y + SQUARE_BORDERS;
+	}
+	else {
+		pos.x = LAT_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.x;
+		pos.y = TOP_PADDING + (INT_PADDING + SQUARE_LENGTH)*squarePos.y;
+	}
+	return pos;
+}
+
+Coordinate getBarrierPositionLCD(Coordinate barrierPos, Direction direction) {
+	// Get screen coordinates of the top left square
+	Coordinate pos = getSquarePositionLCD(barrierPos, 0);
+	// Check barrier direction
+	if (direction == HORIZONTAL)
+		pos.y += SQUARE_LENGTH + 1;
+	else
+		pos.x += SQUARE_LENGTH + 1;
 	return pos;
 }
 
@@ -50,7 +67,7 @@ void drawThickRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color 
 }
 
 void fillSquare(Coordinate squarePos, Color color) {
-	Coordinate startPos = getSquarePositionLCD(squarePos);
+	Coordinate startPos = getSquarePositionLCD(squarePos, 1);
 	Coordinate endPos;
 	endPos.x = startPos.x + SQUARE_LENGTH - SQUARE_BORDERS*2;
 	endPos.y = startPos.y + SQUARE_LENGTH - SQUARE_BORDERS*2;
@@ -59,7 +76,7 @@ void fillSquare(Coordinate squarePos, Color color) {
 	
 void drawAvatar(Avatar avatar, Coordinate squarePos) {
 	int row, col;
-	Coordinate pos = getSquarePositionLCD(squarePos);
+	Coordinate pos = getSquarePositionLCD(squarePos, 1);
 	// Draw avatar
 	for (row=0; row<AVATAR_SIZE; row++)
 		for (col=0; col<AVATAR_SIZE; col++)
@@ -112,6 +129,22 @@ void drawInitialMessage() {
 }
 
 void hideInitialMessage() {
-	// TODO: substitute WHITE with BG_COLOR
-	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Press INT0 to start the game", WHITE, BG_COLOR); 
+	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Use joystick to play", TXT_COLOR, BG_COLOR);
+	GUI_Text(21*8, LCD_HEIGHT - 30, (uint8_t *) "          ", TXT_COLOR, BG_COLOR); 	
 }
+
+void drawBarrier(Barrier barrier) {
+	int i;
+	Coordinate startPos = getBarrierPositionLCD(barrier.centrePos, barrier.direction);
+	if (barrier.direction == HORIZONTAL) {
+		for (i=0; i<INT_PADDING-1; i++)
+			LCD_DrawLine(startPos.x - 1, startPos.y + i, startPos.x + INT_PADDING + SQUARE_LENGTH*2 + 1, startPos.y + i, barrier.color);
+	}
+	else {
+		for (i=0; i<INT_PADDING-1; i++)
+			LCD_DrawLine(startPos.x + i, startPos.y - 1, startPos.x + i, startPos.y + INT_PADDING + SQUARE_LENGTH*2 + 1, barrier.color);
+	}
+}
+
+
+

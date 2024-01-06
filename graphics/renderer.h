@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include "../GLCD/GLCD.h" 
 #include "../game/constants.h"
-#include "../utils/datatypes.h"
-#include "../entities/avatar.h"
-#include "../entities/player.h"
 #include "../entities/board.h"
+#include "../entities/player.h"
+#include "../utils/datatypes.h"
+#include "../entities/barrier.h"
 
 
 extern void drawRectangle(Coordinate p1, Coordinate p2, Color outlineColor, Color fillColor);
@@ -20,5 +20,6 @@ extern void drawNewPlayerPos(Player* p);
 extern void drawInitialLabels(void);
 extern void drawInitialMessage(void);
 extern void hideInitialMessage(void);
+extern void drawBarrier(Barrier barrier);
 
 #endif

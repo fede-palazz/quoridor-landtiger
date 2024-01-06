@@ -9,15 +9,15 @@ void onPressInt0() {
 	if (game.status == WAITING) {		/* Game has to start */
 		disableInputDetection();
 		/* Game initialization */
-		game.status = STARTED;
+		game.status = MOVING;
 		game.turn = INITIAL_TURN;
 		game.countdown = COUNTDOWN_TIME_S;
+		hideInitialMessage();
 		/* Highlights Player possibile moves */
 		highlightSquares();
 		/* Start countdown */
 		reset_timer(0);
 		enable_timer(0);
-		hideInitialMessage();
 		enableInputDetection();
 	}
 }
