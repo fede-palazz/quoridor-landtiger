@@ -46,7 +46,6 @@ void initPlayers() {
 * Search for available squares
 */
 void findPossibileMoves(Coordinate startPos) {
-	// TODO: add check for other player
 	int i;
 	Coordinate endPos;
 	Coordinate middlePos;
@@ -83,11 +82,43 @@ void findPossibileMoves(Coordinate startPos) {
 				break;
 		}
 		/* Check if move can be made */
-		if (isValidSquare(endPos) && 
-				isEmptySquare(endPos) && 
-				!isBarrierSquare(middlePos)) {
-			possibleMoves[i].x = endPos.x;
-			possibleMoves[i].y = endPos.y;
+		if (isValidSquare(endPos) && !isBarrierSquare(middlePos)) { 
+				if (isEmptySquare(endPos) ) {			/* Free square */
+					possibleMoves[i].x = endPos.x;
+					possibleMoves[i].y = endPos.y;
+				}
+				else {		/* There is a player */
+					/* Increase both middle and end positions */
+					switch ((Movement) i) {
+						case MOV_UP:
+							endPos.y -= 2;
+							middlePos.y--;
+							break;
+						case MOV_DOWN:
+							endPos.y += 2;
+							middlePos.y++;
+							break;
+						case MOV_LEFT:
+							endPos.x -= 2;
+							middlePos.x--;
+							break;
+						case MOV_RIGHT:
+							endPos.x += 2;
+							middlePos.x++;
+							break;
+					}
+					/* Check conditions again */
+					if (isValidSquare(endPos) && !isBarrierSquare(middlePos) &&
+							isEmptySquare(endPos)) {
+						possibleMoves[i].x = endPos.x;
+						possibleMoves[i].y = endPos.y;
+					}
+					else {
+						/* Assign invalid values */
+						possibleMoves[i].x = BOARD_SIZE + 1;
+						possibleMoves[i].y = BOARD_SIZE + 1;
+					}
+				}
 		}
 		else {
 			/* Assign invalid values */
