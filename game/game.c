@@ -18,7 +18,10 @@ volatile Coordinate possibleMoves[4] = {
 	{BOARD_SIZE, BOARD_SIZE}, 
 	{BOARD_SIZE, BOARD_SIZE}
 };
-volatile int8_t selectedSquare = -1;
+int8_t selectedSquare = -1;
+volatile Barrier barrier;
+static Barrier barriers[BARRIER_NUM];
+uint8_t placedBarriers = 0;
 
 
 void initGame() {
@@ -35,8 +38,8 @@ void initPlayers() {
 	/* Set players' coordinates */
 	Coordinate initialPosP1 = {6, 12};
 	Coordinate initialPosP2 = {6, 0};
-	initPlayer(&p1, initialPosP1, GREEN_GH);
-	initPlayer(&p2, initialPosP2, RED_GH);
+	initPlayer(&p1, initialPosP1, GREEN_GH, BARRIER_NUM);
+	initPlayer(&p2, initialPosP2, RED_GH, BARRIER_NUM);
 	initBoard(initialPosP1, initialPosP2);
 	/* Update current player */
 	currentPlayer = INITIAL_TURN == 1 ? &p1 : &p2;
@@ -177,6 +180,7 @@ void startNewTurn() {
 		currentPlayer = &p1;
 		game.turn = 1;
 	}
+	game.status = MOVING;
 	selectedSquare = -1;							/* Reset selected square value 			*/
 	highlightSquares();								/* Highlight other player's squares */
 	enableInputDetection();
@@ -191,6 +195,58 @@ void movePlayer() {
 	drawNewPlayerPos(currentPlayer);
 }
 
+void createNewBarrier() {
+	clearHighlightedSquares();
+	selectedSquare = -1;
+	/* Initialize new barrier */
+	barrier.centrePos.x = 7;
+	barrier.centrePos.y = 5;
+	barrier.direction = HORIZONTAL;
+	barrier.color = NEW_BARR_COLOR;		
+	/* Draw new barrier */
+	drawBarrier(barrier);			// TODO: change barrier color according to current player
+}
+
+void deleteNewBarrier() {
+	barrier.color = WHITE;		// TODO: change with board bg color
+	/* Draw new barrier */
+	drawBarrier(barrier);
+}
+
+void moveBarrier(Movement movement) {
+	Coordinate newPos = barrier.centrePos;
+	switch(movement) {
+		case MOV_UP:
+			newPos.y -= 2;			/* Try to move barrier up */
+			break;
+		case MOV_DOWN:
+			newPos.y += 2;			/* Try to move barrier down */
+			break;
+		case MOV_RIGHT:
+			newPos.x += 2;			/* Try to move barrier right */
+			break;
+		case MOV_LEFT:
+			newPos.x -= 2;			/* Try to move barrier left */
+			break;
+	}
+	if (isValidBarrierSquare(newPos, barrier.direction)) {	/* Barrier can be placed */
+		deleteBarrier(barrier);							/* Hide current barrier 			*/
+		barrier.centrePos.x = newPos.x;			/* Update barrier coordinates */
+		barrier.centrePos.y = newPos.y;
+		drawBarrier(barrier);								/* Draw moved barrier 				*/
+	}
+}
+
+void rotateBarrier() {
+	/* Delete current barrier and change direction */
+	deleteBarrier(barrier);			
+	barrier.direction = barrier.direction == HORIZONTAL ? VERTICAL : HORIZONTAL;
+	drawAllBarriers(barriers, placedBarriers);		/* Render all the placed barriers */
+	drawBarrier(barrier);
+}
+
+void placeBarrier() {
+}
 
 
 

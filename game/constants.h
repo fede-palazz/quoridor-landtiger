@@ -22,12 +22,13 @@
 #define TXT_COLOR					BLACK
 
 /* GAME CONFIG						*/
-#define COUNTDOWN_TIME_S	20
+#define COUNTDOWN_TIME_S	200
 #define BOARD_SIZE				13
 #define EMPTY_SQUARE			0
 #define PLAYER_SQUARE			1
 #define BARRIER_SQUARE		2
 #define INITIAL_TURN			1
+#define BARRIER_NUM				8
 
 /* LCD colors */
 #define Color 						uint16_t
@@ -46,8 +47,11 @@
 #define YELLOW        		0xFFE0
 #define DARK_GRAY 				0x4208
 #define TRANSPARENT				0x590C
+
 #define HIGHLIGHT_COLOR		YELLOW
 #define SELECT_COLOR			GREEN
+#define NEW_BARR_COLOR		CYAN
+#define BARRIER_COLOR			RED
 #define NO_COLOR      		0xCCCC
 
 

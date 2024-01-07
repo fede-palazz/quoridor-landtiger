@@ -3,6 +3,7 @@
 
 #include "../game/constants.h"
 #include "../utils/datatypes.h"
+#include "barrier.h"
 #include "player.h"
 
 
@@ -14,5 +15,6 @@ extern uint8_t isEmptySquare(Coordinate squarePos);
 extern uint8_t isPlayerSquare(Coordinate squarePos);
 extern uint8_t isBarrierSquare(Coordinate squarePos);
 extern void updateBoardPlayer(Player* player);
+extern uint8_t isValidBarrierSquare(Coordinate centrePos, Direction direction);
 
 #endif

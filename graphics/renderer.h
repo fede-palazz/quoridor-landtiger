@@ -21,5 +21,8 @@ extern void drawInitialLabels(void);
 extern void drawInitialMessage(void);
 extern void hideInitialMessage(void);
 extern void drawBarrier(Barrier barrier);
+extern void deleteBarrier(Barrier barrier);
+extern void drawNoBarriersMessage(void);
+extern void drawAllBarriers(Barrier* barriers, uint8_t barriersTot);
 
 #endif

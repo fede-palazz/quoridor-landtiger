@@ -146,5 +146,19 @@ void drawBarrier(Barrier barrier) {
 	}
 }
 
+void deleteBarrier(Barrier barrier) {
+	barrier.color = WHITE;			// TODO: Change white with BARRIER_BG_COLOR
+	drawBarrier(barrier);
+}
 
+void drawNoBarriersMessage() {
+	// max 30 chars in a row
+	GUI_Text(0, 305, (uint8_t *) "no more walls, move the token", TXT_COLOR, BG_COLOR);
+}
+
+void drawAllBarriers(Barrier* barriers, uint8_t barriersTot) {
+	int i;
+	for (i=0; i<barriersTot; i++)
+		drawBarrier(barriers[i]);
+}
 

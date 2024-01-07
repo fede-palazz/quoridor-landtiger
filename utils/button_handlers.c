@@ -1,5 +1,6 @@
 #include "../graphics/renderer.h"
 #include "button_handlers.h"
+#include "../utils/input.h"
 #include "../timer/timer.h"
 #include "button_utils.h"
 #include "../game/game.h"
@@ -23,7 +24,38 @@ void onPressInt0() {
 }
 
 void onPressKey1() {
+	if (currentPlayer->barrierNum > 0) {		/* Check remaning barriers */
+		if (game.status == MOVING && game.countdown > 0) {
+			disableInputDetection();
+			/* Switch to barrier placing mode */
+			game.status = PLACING;
+			disable_timer(0);
+			reset_timer(0);
+			createNewBarrier();		/* Create new barrier in the centre of the board */
+			enable_timer(0);
+		}
+		else if (game.status == PLACING) {
+			/* Come back to MOVING mode */
+			
+		}
+	}
+	else {		/* Show a warning message */
+		disableInputDetection();
+		disable_timer(0);
+		reset_timer(0);
+		drawNoBarriersMessage();
+		enable_timer(0);
+		enableInputDetection();
+	}
 }
 
 void onPressKey2() {
+	if (game.status == PLACING && game.countdown > 0) {	/* Check if player is placing a barrier */
+		disableInputDetection();
+		disable_timer(0);
+		reset_timer(0);
+		rotateBarrier();			/* Rotate current barrier */
+		enable_timer(0);
+		enableInputDetection();
+	}
 }

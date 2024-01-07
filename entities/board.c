@@ -63,3 +63,20 @@ void updateBoardPlayer(Player* player) {
 	board[player->pos.y][player->pos.x] = PLAYER_SQUARE;
 }
 
+uint8_t isValidBarrierSquare(Coordinate centrePos, Direction direction) {
+	Coordinate h1, h2, v1, v2;
+	/* If direction horizontal */
+	h1.x = centrePos.x + 1;
+	h1.y = centrePos.y;
+	h2.x = centrePos.x - 1;
+	h2.y = centrePos.y;
+	
+	/* If direction vertical */
+	v1.x = centrePos.x;
+	v1.y = centrePos.y + 1;
+	v2.x = centrePos.x;
+	v2.y = centrePos.y - 1;
+	
+	return direction == HORIZONTAL ? isValidSquare(h1) && isValidSquare(h2)
+																 : isValidSquare(v1) && isValidSquare(v2);
+}

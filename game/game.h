@@ -26,7 +26,8 @@ typedef enum movement {
 
 extern volatile Game game;
 extern Player* currentPlayer;
-extern volatile int8_t selectedSquare;
+extern volatile Barrier barrier;
+extern int8_t selectedSquare;
 extern volatile Coordinate possibleMoves[];
 extern volatile uint8_t board[BOARD_SIZE][BOARD_SIZE];
 
@@ -36,5 +37,9 @@ extern void clearHighlightedSquares(void);
 extern void selectSquare(Movement movement);
 extern void startNewTurn(void);
 extern void movePlayer(void);
+extern void createNewBarrier(void);
+extern void moveBarrier(Movement movement);
+extern void rotateBarrier(void);
+extern void placeBarrier(void);
 
 #endif

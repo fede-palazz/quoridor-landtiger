@@ -51,9 +51,6 @@ int main(void)
 	initGame();
 	resetDetectedInputs();
   enableInputDetection();
-
-	// max 30 chars in a row
-	//GUI_Text(0, 305, (uint8_t *) "no more walls, move the token", BLUE, WHITE);
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= ~(0x2);						

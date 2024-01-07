@@ -10,9 +10,10 @@ typedef struct Player {
 	Avatar avatar;
 	Coordinate pos;
 	Coordinate previousPos;
+	uint8_t barrierNum;
 } Player;
 
-extern void initPlayer(Player* player, Coordinate pos, Color color);
+extern void initPlayer(Player* player, Coordinate pos, Color color, uint8_t barrierNum);
 extern void setPlayerPos(Player* player, uint16_t x, uint16_t y);
 
 
