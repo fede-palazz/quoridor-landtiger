@@ -168,7 +168,6 @@ void selectSquare(Movement movement) {
 }
 
 void startNewTurn() {
-	disableInputDetection();
 	/* Change turn settings */
 	if (game.turn == 1) {
 		/* Switch to 2nd player */
@@ -180,10 +179,12 @@ void startNewTurn() {
 		currentPlayer = &p1;
 		game.turn = 1;
 	}
+	/* Check if a barrier needs to be deleted */
+	if (game.status == PLACING)
+		deleteBarrier(barrier);
 	game.status = MOVING;
 	selectedSquare = -1;							/* Reset selected square value 			*/
 	highlightSquares();								/* Highlight other player's squares */
-	enableInputDetection();
 }
 
 void movePlayer() {
@@ -233,6 +234,7 @@ void moveBarrier(Movement movement) {
 		deleteBarrier(barrier);							/* Hide current barrier 			*/
 		barrier.centrePos.x = newPos.x;			/* Update barrier coordinates */
 		barrier.centrePos.y = newPos.y;
+		drawAllBarriers(barriers, placedBarriers);		/* Render all the placed barriers */
 		drawBarrier(barrier);								/* Draw moved barrier 				*/
 	}
 }
@@ -246,6 +248,15 @@ void rotateBarrier() {
 }
 
 void placeBarrier() {
+	/* Check whether barrier can't be placed because of other barriers */
+	if (isBarrierOverlapping(barrier.centrePos, barrier.direction)) 
+		return;
+	barrier.color = BARRIER_COLOR;				// TODO: color can be changed according to current player
+	barriers[placedBarriers++] = barrier;		/* Add barrier to placed barriers list */
+	updateBoardBarrier(barrier.centrePos, barrier.direction);	/* Update board values */
+	drawBarrier(barrier);			/* Render barrier with normal color */
+	game.status = MOVING;
+	startNewTurn();
 }
 
 

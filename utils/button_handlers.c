@@ -33,6 +33,7 @@ void onPressKey1() {
 			reset_timer(0);
 			createNewBarrier();		/* Create new barrier in the centre of the board */
 			enable_timer(0);
+			enableInputDetection();
 		}
 		else if (game.status == PLACING) {
 			/* Come back to MOVING mode */

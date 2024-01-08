@@ -30,16 +30,16 @@ uint8_t countDownBuffer[10];
 void TIMER0_IRQHandler (void)
 {
 	Color color = TXT_COLOR;
-	disableInputDetection();				/* Disable RIT and buttons */
+	//disableInputDetection();				/* Disable RIT and buttons */
 
-	if (game.countdown == COUNTDOWN_TIME_S) {
-		/* A new turn has started	*/
-		// TODO: Substitute WHITE with BG_COLOR
-		if (game.turn == 1)						/* Override P2 timer */
-			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "    ", WHITE, WHITE);
-		else
-			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "    ", WHITE, WHITE);
-	}
+//	if (game.countdown == COUNTDOWN_TIME_S) {
+//		/* A new turn has started	*/
+//		// TODO: Substitute WHITE with BG_COLOR
+// 		if (game.turn == 1)						/* Override P2 timer */
+//			GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "     ", WHITE, WHITE);
+//		else
+//			GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "     ", WHITE, WHITE);
+//	}
 	/* Zero padding if counter < 10 */
 	if (game.countdown < 10) {
 		/* Convert countdown value into char array */
@@ -59,16 +59,18 @@ void TIMER0_IRQHandler (void)
 	/* When time is expired */
 	if (game.countdown == 0) {
 		/* Current turn is finished	*/
+		disableInputDetection();
 		disable_timer(0);
 		reset_timer(0);
 		game.countdown = COUNTDOWN_TIME_S;
 		enable_timer(0);
 		clearHighlightedSquares();
 		startNewTurn();
+		enableInputDetection();
 	}
 	else
 		game.countdown--;
-	enableInputDetection();				/* Enable RIT and buttons */
+	//enableInputDetection();				/* Enable RIT and buttons */
 	LPC_TIM0->IR = 1;							/* Clear interrupt flag */
 }
 

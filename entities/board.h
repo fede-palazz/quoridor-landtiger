@@ -16,5 +16,7 @@ extern uint8_t isPlayerSquare(Coordinate squarePos);
 extern uint8_t isBarrierSquare(Coordinate squarePos);
 extern void updateBoardPlayer(Player* player);
 extern uint8_t isValidBarrierSquare(Coordinate centrePos, Direction direction);
+extern void updateBoardBarrier(Coordinate centrePos, Direction direction);
+extern uint8_t isBarrierOverlapping(Coordinate centrePos, Direction direction);
 
 #endif

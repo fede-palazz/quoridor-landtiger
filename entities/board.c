@@ -63,6 +63,18 @@ void updateBoardPlayer(Player* player) {
 	board[player->pos.y][player->pos.x] = PLAYER_SQUARE;
 }
 
+void updateBoardBarrier(Coordinate centrePos, Direction direction) {
+	board[centrePos.y][centrePos.x] = BARRIER_SQUARE;
+	if (direction == HORIZONTAL) {
+		board[centrePos.y][centrePos.x + 1] = BARRIER_SQUARE;
+		board[centrePos.y][centrePos.x - 1] = BARRIER_SQUARE;
+	}
+	else {
+		board[centrePos.y + 1][centrePos.x] = BARRIER_SQUARE;
+		board[centrePos.y - 1][centrePos.x] = BARRIER_SQUARE;
+	}
+}
+
 uint8_t isValidBarrierSquare(Coordinate centrePos, Direction direction) {
 	Coordinate h1, h2, v1, v2;
 	/* If direction horizontal */
@@ -79,4 +91,24 @@ uint8_t isValidBarrierSquare(Coordinate centrePos, Direction direction) {
 	
 	return direction == HORIZONTAL ? isValidSquare(h1) && isValidSquare(h2)
 																 : isValidSquare(v1) && isValidSquare(v2);
+}
+
+uint8_t isBarrierOverlapping(Coordinate centrePos, Direction direction) {
+	Coordinate h1, h2, v1, v2;
+	if (isBarrierSquare(centrePos))		/* Check overlapping of barrier central position */
+		return 1;
+	/* If direction horizontal */
+	h1.x = centrePos.x + 1;
+	h1.y = centrePos.y;
+	h2.x = centrePos.x - 1;
+	h2.y = centrePos.y;
+	
+	/* If direction vertical */
+	v1.x = centrePos.x;
+	v1.y = centrePos.y + 1;
+	v2.x = centrePos.x;
+	v2.y = centrePos.y - 1;
+	
+	return direction == HORIZONTAL ? isBarrierSquare(h1) || isBarrierSquare(h2)
+																 : isBarrierSquare(v1) || isBarrierSquare(v2);
 }
