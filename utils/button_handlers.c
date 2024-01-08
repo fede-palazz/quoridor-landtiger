@@ -13,7 +13,7 @@ void onPressInt0() {
 		game.status = MOVING;
 		game.turn = INITIAL_TURN;
 		game.countdown = COUNTDOWN_TIME_S;
-		hideInitialMessage();
+		drawCurrentTurn(currentPlayer, game.turn);
 		/* Highlights Player possibile moves */
 		highlightSquares();
 		/* Start countdown */
@@ -24,27 +24,31 @@ void onPressInt0() {
 }
 
 void onPressKey1() {
-	if (currentPlayer->barrierNum > 0) {		/* Check remaning barriers */
-		if (game.status == MOVING && game.countdown > 0) {
+	if (currentPlayer->barrierNum > 0 && game.countdown > 0) {		/* Check remaning barriers */
+		if (game.status == MOVING ) {
 			disableInputDetection();
-			/* Switch to barrier placing mode */
-			game.status = PLACING;
+			game.status = PLACING;	/* Switch to barrier placing mode */
 			disable_timer(0);
 			reset_timer(0);
-			createNewBarrier();		/* Create new barrier in the centre of the board */
+			createNewBarrier();			/* Create new barrier in the centre of the board */
 			enable_timer(0);
 			enableInputDetection();
 		}
 		else if (game.status == PLACING) {
 			/* Come back to MOVING mode */
-			
+			disable_timer(0);
+			reset_timer(0);
+			switchToMovingMode();
+			enable_timer(0);
+			enableInputDetection();
 		}
 	}
-	else {		/* Show a warning message */
+	else if (currentPlayer->barrierNum == 0) {		/* Show a warning message */
 		disableInputDetection();
 		disable_timer(0);
 		reset_timer(0);
 		drawNoBarriersMessage();
+		isWarningDisplayed = 1;			/* Check message to be hidden on next turn */
 		enable_timer(0);
 		enableInputDetection();
 	}

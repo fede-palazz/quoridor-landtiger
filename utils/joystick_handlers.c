@@ -52,26 +52,31 @@ void onJoystickSelect() {
 				reset_timer(0);
 				game.countdown = COUNTDOWN_TIME_S;
 				startNewTurn();
+				/* A new turn has started	*/
+			if (game.turn == 1)						/* Override P2 timer */
+				GUI_Text(COUNT2_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
+			else
+				GUI_Text(COUNT1_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
 				enable_timer(0);
 			}
 			enableInputDetection();
 		}
 		else if (game.status == PLACING && game.countdown > 0) {
+			uint8_t barrierPlaced;
 			/* Confirm barrier placement and end turn */
 			disableInputDetection();
 			disable_timer(0);
 			reset_timer(0);
-			placeBarrier();			/* Place barrier and start new turn */
-			game.countdown = COUNTDOWN_TIME_S;
+			barrierPlaced = placeBarrier();			/* Try to place barrier and return operation result */
+			if (barrierPlaced) {
+				game.countdown = COUNTDOWN_TIME_S;
+				/* A new turn has started	*/
+				if (game.turn == 1)						/* Override P2 timer */
+					GUI_Text(COUNT2_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
+				else
+					GUI_Text(COUNT1_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
+			}
 			enable_timer(0);
 			enableInputDetection();
-		}
-		if (game.countdown == COUNTDOWN_TIME_S) {
-			/* A new turn has started	*/
-			// TODO: Substitute WHITE with BG_COLOR
-			if (game.turn == 1)						/* Override P2 timer */
-				GUI_Text(LAT_PADDING + 162, LAT_PADDING + 22, (uint8_t *) "     ", WHITE, WHITE);
-			else
-				GUI_Text(LAT_PADDING + 30, LAT_PADDING + 22, (uint8_t *) "     ", WHITE, WHITE);
 		}
 }

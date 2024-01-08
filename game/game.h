@@ -30,6 +30,7 @@ extern volatile Barrier barrier;
 extern int8_t selectedSquare;
 extern volatile Coordinate possibleMoves[];
 extern volatile uint8_t board[BOARD_SIZE][BOARD_SIZE];
+extern volatile uint8_t isWarningDisplayed;
 
 extern void initGame(void);
 extern void highlightSquares(void);
@@ -40,6 +41,7 @@ extern void movePlayer(void);
 extern void createNewBarrier(void);
 extern void moveBarrier(Movement movement);
 extern void rotateBarrier(void);
-extern void placeBarrier(void);
+extern uint8_t placeBarrier(void);
+extern void switchToMovingMode(void);
 
 #endif

@@ -146,7 +146,7 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
 	
 
 	NVIC_EnableIRQ(TIMER0_IRQn);
-	NVIC_SetPriority(TIMER0_IRQn, 0);		/* more priority than buttons */
+	//NVIC_SetPriority(TIMER0_IRQn, 5);		/* less priority than RIT */
 	return (1);
   }
   else if ( timer_num == 1 )
@@ -155,7 +155,7 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
 	LPC_TIM1->MCR = 3;				
 
 	NVIC_EnableIRQ(TIMER1_IRQn);
-	NVIC_SetPriority(TIMER1_IRQn, 0);	/* less priority than buttons and timer0*/
+	NVIC_SetPriority(TIMER1_IRQn, 0);
 	return (1);
   }
   return (0);

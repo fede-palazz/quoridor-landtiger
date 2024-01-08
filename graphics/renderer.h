@@ -19,10 +19,13 @@ extern void drawPlayers(Player* p1, Player* p2);
 extern void drawNewPlayerPos(Player* p);
 extern void drawInitialLabels(void);
 extern void drawInitialMessage(void);
-extern void hideInitialMessage(void);
+extern void drawCurrentTurn(Player* player, uint8_t currentTurn);
+extern void updateCurrentTurn(Player* player, uint8_t currentTurn);
 extern void drawBarrier(Barrier barrier);
 extern void deleteBarrier(Barrier barrier);
 extern void drawNoBarriersMessage(void);
+extern void hideNoBarriersMessage(void);
 extern void drawAllBarriers(Barrier* barriers, uint8_t barriersTot);
+extern void refreshBarrierNum(uint8_t barrierNum, uint8_t currentTurn);
 
 #endif

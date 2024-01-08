@@ -119,18 +119,31 @@ void drawNewPlayerPos(Player* p) {
 
 void drawInitialLabels() {
 	// Players' barriers
-	GUI_Text(LAT_PADDING + 5, LAT_PADDING + 3, (uint8_t *) "P1 walls: 8", TXT_COLOR, BG_COLOR); 
-	GUI_Text(LAT_PADDING + 132, LAT_PADDING + 3, (uint8_t *) "P2 walls: 8", TXT_COLOR, BG_COLOR); 
+	GUI_Text(LAT_PADDING + 5, LAT_PADDING + 3, (uint8_t *) "P1 walls: ", TXT_COLOR, BG_COLOR); 
+	refreshBarrierNum(BARRIER_NUM, 1);
+	GUI_Text(LAT_PADDING + 132, LAT_PADDING + 3, (uint8_t *) "P2 walls: ", TXT_COLOR, BG_COLOR); 
+	refreshBarrierNum(BARRIER_NUM, 2);
 }
 
 void drawInitialMessage() {
 	// Bottom message
-	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Press INT0 to start the game", TXT_COLOR, BG_COLOR); 
+	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "Press INT0 to start the game", TXT_COLOR, BG_COLOR); 
 }
 
-void hideInitialMessage() {
-	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 30, (uint8_t *) "Use joystick to play", TXT_COLOR, BG_COLOR);
-	GUI_Text(21*8, LCD_HEIGHT - 30, (uint8_t *) "          ", TXT_COLOR, BG_COLOR); 	
+void drawCurrentTurn(Player* player, uint8_t currentTurn) {
+	// TODO: draw small avatar
+	if (currentTurn == 1)
+			GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "     P1 it's your turn!     ", TXT_COLOR, BG_COLOR);
+	else
+			GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "     P1 it's your turn!     ", TXT_COLOR, BG_COLOR);
+}
+
+void updateCurrentTurn(Player* player, uint8_t currentTurn) {
+	// TODO: draw small avatar
+	if (currentTurn == 1)
+		GUI_Text(LAT_PADDING + 50, LCD_HEIGHT - 38, (uint8_t *) "1", TXT_COLOR, BG_COLOR);
+	else
+		GUI_Text(LAT_PADDING + 50, LCD_HEIGHT - 38, (uint8_t *) "2", TXT_COLOR, BG_COLOR);
 }
 
 void drawBarrier(Barrier barrier) {
@@ -153,7 +166,11 @@ void deleteBarrier(Barrier barrier) {
 
 void drawNoBarriersMessage() {
 	// max 30 chars in a row
-	GUI_Text(0, 305, (uint8_t *) "no more walls, move the token", TXT_COLOR, BG_COLOR);
+	GUI_Text(LAT_PADDING, 302, (uint8_t *) "no more walls, move the token", TXT_COLOR_2, BG_COLOR);
+}
+
+void hideNoBarriersMessage() {
+	GUI_Text(LAT_PADDING, 302, (uint8_t *) "                             ", BG_COLOR, BG_COLOR);
 }
 
 void drawAllBarriers(Barrier* barriers, uint8_t barriersTot) {
@@ -162,3 +179,11 @@ void drawAllBarriers(Barrier* barriers, uint8_t barriersTot) {
 		drawBarrier(barriers[i]);
 }
 
+void refreshBarrierNum(uint8_t barrierNum, uint8_t currentTurn) {
+	uint8_t buffer[2];	/* Temporary char array */
+	sprintf((char *)buffer, "%d", barrierNum); /* Convert barrierNum value into char array */
+	if (currentTurn == 1)
+		GUI_Text(LAT_PADDING + 85, LAT_PADDING + 3, buffer, TXT_COLOR, BG_COLOR); 
+	else
+		GUI_Text(LAT_PADDING + 212, LAT_PADDING + 3, buffer, TXT_COLOR, BG_COLOR); 
+}

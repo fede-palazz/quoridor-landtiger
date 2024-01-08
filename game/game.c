@@ -20,8 +20,9 @@ volatile Coordinate possibleMoves[4] = {
 };
 int8_t selectedSquare = -1;
 volatile Barrier barrier;
-static Barrier barriers[BARRIER_NUM];
+static Barrier barriers[BARRIER_NUM*2];
 uint8_t placedBarriers = 0;
+volatile uint8_t isWarningDisplayed = 0;
 
 
 void initGame() {
@@ -180,11 +181,17 @@ void startNewTurn() {
 		game.turn = 1;
 	}
 	/* Check if a barrier needs to be deleted */
-	if (game.status == PLACING)
+	if (game.status == PLACING) {
 		deleteBarrier(barrier);
+		drawAllBarriers(barriers, placedBarriers);
+	}
+	/* Check if warning message is displayed */
+	if (isWarningDisplayed)
+		hideNoBarriersMessage();
 	game.status = MOVING;
-	selectedSquare = -1;							/* Reset selected square value 			*/
-	highlightSquares();								/* Highlight other player's squares */
+	selectedSquare = -1;													/* Reset selected square value 			*/
+	updateCurrentTurn(currentPlayer, game.turn);	/* Display current player 					*/
+	highlightSquares();														/* Highlight other player's squares */
 }
 
 void movePlayer() {
@@ -247,17 +254,26 @@ void rotateBarrier() {
 	drawBarrier(barrier);
 }
 
-void placeBarrier() {
+uint8_t placeBarrier() {
 	/* Check whether barrier can't be placed because of other barriers */
 	if (isBarrierOverlapping(barrier.centrePos, barrier.direction)) 
-		return;
-	barrier.color = BARRIER_COLOR;				// TODO: color can be changed according to current player
-	barriers[placedBarriers++] = barrier;		/* Add barrier to placed barriers list */
-	updateBoardBarrier(barrier.centrePos, barrier.direction);	/* Update board values */
+		return 0;
+	barrier.color = BARRIER_COLOR;					// TODO: color can be changed according to current player
+	barriers[placedBarriers++] = barrier;		/* Add barrier to placed barriers list 		*/
+	currentPlayer->barrierNum--;						/* Decrease player's barriers number 			*/
+	updateBoardBarrier(barrier.centrePos, barrier.direction);	/* Update board values 	*/
 	drawBarrier(barrier);			/* Render barrier with normal color */
+	refreshBarrierNum(currentPlayer->barrierNum, game.turn); /* Update barrier number info on screen */
 	game.status = MOVING;
 	startNewTurn();
+	return 1;
 }
 
+void switchToMovingMode() {
+	game.status = MOVING;
+	deleteBarrier(barrier);
+	drawAllBarriers(barriers, placedBarriers);
+	highlightSquares();				/* Highlight other player's squares */
+}
 
 
