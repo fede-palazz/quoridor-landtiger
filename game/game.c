@@ -37,8 +37,10 @@ void initGame() {
 
 void initPlayers() {
 	/* Set players' coordinates */
-	Coordinate initialPosP1 = {6, 12};
-	Coordinate initialPosP2 = {6, 0};
+//	Coordinate initialPosP1 = {6, 12};
+//	Coordinate initialPosP2 = {6, 0};
+	Coordinate initialPosP1 = {4, 6};
+	Coordinate initialPosP2 = {4, 4};
 	initPlayer(&p1, initialPosP1, GREEN_GH, BARRIER_NUM);
 	initPlayer(&p2, initialPosP2, RED_GH, BARRIER_NUM);
 	initBoard(initialPosP1, initialPosP2);
@@ -96,19 +98,19 @@ void findPossibileMoves(Coordinate startPos) {
 					switch ((Movement) i) {
 						case MOV_UP:
 							endPos.y -= 2;
-							middlePos.y--;
+							middlePos.y -= 2;
 							break;
 						case MOV_DOWN:
 							endPos.y += 2;
-							middlePos.y++;
+							middlePos.y += 2;
 							break;
 						case MOV_LEFT:
 							endPos.x -= 2;
-							middlePos.x--;
+							middlePos.x -= 2;
 							break;
 						case MOV_RIGHT:
 							endPos.x += 2;
-							middlePos.x++;
+							middlePos.x += 2;
 							break;
 					}
 					/* Check conditions again */
@@ -261,7 +263,7 @@ uint8_t placeBarrier() {
 	barrier.color = BARRIER_COLOR;					// TODO: color can be changed according to current player
 	barriers[placedBarriers++] = barrier;		/* Add barrier to placed barriers list 		*/
 	currentPlayer->barrierNum--;						/* Decrease player's barriers number 			*/
-	updateBoardBarrier(barrier.centrePos, barrier.direction);	/* Update board values 	*/
+	insertBoardBarrier(barrier.centrePos, barrier.direction);	/* Update board values 	*/
 	drawBarrier(barrier);			/* Render barrier with normal color */
 	refreshBarrierNum(currentPlayer->barrierNum, game.turn); /* Update barrier number info on screen */
 	game.status = MOVING;
