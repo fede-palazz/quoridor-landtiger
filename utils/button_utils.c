@@ -9,13 +9,15 @@
 *
 */
 void enableBtn(int btnNum) {
-	int pinsel_bit_pos = 20 + btnNum*2;								// PINSEL bit positions should be respectively 20,22,24
-	NVIC_EnableIRQ(EINT0_IRQn + btnNum);							// Enable button interrupts
+	int pinsel_bit_pos = 20 + btnNum*2;				// PINSEL bit positions should be respectively 20,22,24
+	IRQn_Type button = (IRQn_Type)(EINT0_IRQn + btnNum);
+	NVIC_EnableIRQ(button);										// Enable button interrupts
 	LPC_PINCON->PINSEL4  |= (1 << pinsel_bit_pos);   	// Enable the pin connection for the button
 }
 
 void disableBtn(int btnNum) {
-	int pinsel_bit_pos = 20 + btnNum*2;								// PINSEL bit positions should be respectively 20,22,24
-	NVIC_DisableIRQ(EINT0_IRQn + btnNum);							// Disable button interrupts
+	int pinsel_bit_pos = 20 + btnNum*2;				// PINSEL bit positions should be respectively 20,22,24
+	IRQn_Type button = (IRQn_Type)(EINT0_IRQn + btnNum);
+	NVIC_DisableIRQ(button);									// Disable button interrupts
 	LPC_PINCON->PINSEL4  &= ~(1 << pinsel_bit_pos);		// Disable the pin connection for the button
 }

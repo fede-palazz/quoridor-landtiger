@@ -13,13 +13,16 @@ void onPressInt0() {
 		game.status = MOVING;
 		game.turn = INITIAL_TURN;
 		game.countdown = COUNTDOWN_TIME_S;
-		drawCurrentTurn(currentPlayer, game.turn);
+		drawCurrentTurnMessage(currentPlayer, game.turn);
 		/* Highlights Player possibile moves */
 		highlightSquares();
 		/* Start countdown */
 		reset_timer(0);
 		enable_timer(0);
 		enableInputDetection();
+	}
+	else if (game.status == FINISHED) {
+		resetGame();
 	}
 }
 
@@ -43,12 +46,12 @@ void onPressKey1() {
 			enableInputDetection();
 		}
 	}
-	else if (currentPlayer->barrierNum == 0) {		/* Show a warning message */
+	else if (currentPlayer->barrierNum == 0 && game.status == MOVING) {		/* Show a warning message */
 		disableInputDetection();
 		disable_timer(0);
 		reset_timer(0);
 		drawNoBarriersMessage();
-		isWarningDisplayed = 1;			/* Check message to be hidden on next turn */
+		isBarrierWarningDisplayed = 1;			/* Check message to be hidden on next turn */
 		enable_timer(0);
 		enableInputDetection();
 	}

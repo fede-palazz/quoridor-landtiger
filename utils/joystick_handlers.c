@@ -51,13 +51,19 @@ void onJoystickSelect() {
 				disable_timer(0);
 				reset_timer(0);
 				game.countdown = COUNTDOWN_TIME_S;
-				startNewTurn();
-				/* A new turn has started	*/
-			if (game.turn == 1)						/* Override P2 timer */
-				GUI_Text(COUNT2_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
-			else
-				GUI_Text(COUNT1_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
-				enable_timer(0);
+				/* Check if player won the game */
+				if (checkWinningCondition()) {
+					game.status = FINISHED;
+				}
+				else {
+					startNewTurn();
+					/* A new turn has started	*/
+					if (game.turn == 1)						/* Override P2 timer */
+						GUI_Text(COUNT2_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
+					else
+						GUI_Text(COUNT1_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);
+					enable_timer(0);
+				}
 			}
 			enableInputDetection();
 		}

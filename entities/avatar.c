@@ -229,11 +229,10 @@ static uint8_t avatar_8_pixel_data[AVATAR_SIZE][AVATAR_SIZE] = {
 static uint8_t chosenAvatars = 0;
 int randomIndex;
 
+
 /* Function that returns a random avatar */
 Avatar get_random_avatar(Color color) {
   Avatar avatar;
-	// TODO: inizialize seed with an ADC read
-	// srand(ADC_VALUE);
 	// Check if all the avatars have been used
 	if (chosenAvatars == 255) {
 		chosenAvatars = 0;

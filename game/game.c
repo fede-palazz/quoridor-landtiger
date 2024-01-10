@@ -12,7 +12,7 @@ void startNewTurn(void);
 volatile Game game;
 static Player p1, p2;
 Player* currentPlayer;
-volatile Coordinate possibleMoves[4] = { 
+volatile Coordinate possibleMoves[4] = { /* Initialize with invalid moves */
 	{BOARD_SIZE, BOARD_SIZE}, 
 	{BOARD_SIZE, BOARD_SIZE}, 
 	{BOARD_SIZE, BOARD_SIZE}, 
@@ -22,7 +22,7 @@ int8_t selectedSquare = -1;
 volatile Barrier barrier;
 static Barrier barriers[BARRIER_NUM*2];
 uint8_t placedBarriers = 0;
-volatile uint8_t isWarningDisplayed = 0;
+volatile uint8_t isBarrierWarningDisplayed = 0;
 
 
 void initGame() {
@@ -186,11 +186,11 @@ void startNewTurn() {
 		drawAllBarriers(barriers, placedBarriers);
 	}
 	/* Check if warning message is displayed */
-	if (isWarningDisplayed)
+	if (isBarrierWarningDisplayed)
 		hideNoBarriersMessage();
 	game.status = MOVING;
 	selectedSquare = -1;													/* Reset selected square value 			*/
-	updateCurrentTurn(currentPlayer, game.turn);	/* Display current player 					*/
+	updateCurrentTurnMessage(currentPlayer, game.turn);	/* Display current player 					*/
 	highlightSquares();														/* Highlight other player's squares */
 }
 
@@ -200,7 +200,7 @@ void movePlayer() {
 	/* Update board status */
 	updateBoardPlayer(currentPlayer);
 	/* Draw player in new position */
-	drawNewPlayerPos(currentPlayer);
+	drawNewPlayerPos(currentPlayer, SQUARE_COLOR);
 }
 
 void createNewBarrier() {
@@ -276,4 +276,30 @@ void switchToMovingMode() {
 	highlightSquares();				/* Highlight other player's squares */
 }
 
+uint8_t checkWinningCondition() {
+	if ((game.turn == 1 && currentPlayer->pos.y == 0) ||
+			(game.turn == 2 && currentPlayer->pos.y == BOARD_SIZE - 1)) {
+		/* Player won the game */
+		drawWinningMessage();
+		return 1;
+	}
+	return 0;
+}
+
+void resetGame() {
+	/* Delete current avatars */
+	fillSquare(p1.pos, SQUARE_COLOR);
+	fillSquare(p2.pos, SQUARE_COLOR);
+	/* Reset barriers */
+	deleteAllBarriers(barriers, placedBarriers);
+	placedBarriers = 0;
+	game.status = WAITING;							/* Game initialization		*/
+	game.turn = INITIAL_TURN;
+	initPlayers();											/* Players initialization	*/
+	initBoard(p1.pos, p2.pos);					/* Board initialization		*/
+	drawPlayers(&p1, &p2);
+	refreshBarrierNum(BARRIER_NUM, 1);
+	refreshBarrierNum(BARRIER_NUM, 2);
+	drawInitialMessage();
+}
 
