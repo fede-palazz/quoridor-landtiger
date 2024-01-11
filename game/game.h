@@ -15,6 +15,7 @@ typedef struct game {
 	GameStatus status;
 	uint8_t turn;
 	uint8_t countdown;
+	uint32_t lastMove;
 } Game;
 
 typedef enum movement {

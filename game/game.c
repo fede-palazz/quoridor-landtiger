@@ -27,6 +27,8 @@ volatile uint8_t isBarrierWarningDisplayed = 0;
 
 void initGame() {
 	game.status = WAITING;							/* Game initialization		*/
+	game.turn = INITIAL_TURN;
+	game.lastMove = 0;
 	//LCD_Clear(BG_COLOR);							/* Set background color 	*/
 	drawBoard(BLACK, NO_COLOR);					/* Board initialization		*/
 	initPlayers();											/* Players initialization	*/
@@ -189,7 +191,7 @@ void startNewTurn() {
 	}
 	/* Check if warning message is displayed */
 	if (isBarrierWarningDisplayed)
-		hideNoBarriersMessage();
+		hideSecondaryMessage();
 	game.status = MOVING;
 	selectedSquare = -1;													/* Reset selected square value 			*/
 	updateCurrentTurnMessage(currentPlayer, game.turn);	/* Display current player 					*/
@@ -257,9 +259,19 @@ void rotateBarrier() {
 }
 
 uint8_t placeBarrier() {
+//	uint8_t b1, b2;
 	/* Check whether barrier can't be placed because of other barriers */
 	if (isBarrierOverlapping(barrier.centrePos, barrier.direction)) 
 		return 0;
+//	b1 = isBarrierBlockingPlayer(barrier, p1.pos, 1);
+//	b2 = isBarrierBlockingPlayer(barrier, p2.pos, 2);
+	/* Check whether a player is trapped because of the barrier */
+	if (isBarrierBlockingPlayer(barrier, p1.pos, 1) || isBarrierBlockingPlayer(barrier, p2.pos, 2)) {
+//	if (b1 || b2) {
+		drawTrapMessage();
+		isBarrierWarningDisplayed = 1;
+		return 0;
+	}
 	barrier.color = BARRIER_COLOR;					// TODO: color can be changed according to current player
 	barriers[placedBarriers++] = barrier;		/* Add barrier to placed barriers list 		*/
 	currentPlayer->barrierNum--;						/* Decrease player's barriers number 			*/
@@ -299,6 +311,7 @@ void resetGame() {
 	game.turn = INITIAL_TURN;
 	initPlayers();											/* Players initialization	*/
 	initBoard(p1.pos, p2.pos);					/* Board initialization		*/
+	hideSecondaryMessage();
 	drawPlayers(&p1, &p2);
 	refreshBarrierNum(BARRIER_NUM, 1);
 	refreshBarrierNum(BARRIER_NUM, 2);

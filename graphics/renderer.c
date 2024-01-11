@@ -210,7 +210,11 @@ void drawNoBarriersMessage() {
 	GUI_Text(LAT_PADDING, 302, (uint8_t *) "no more walls, move the token", TXT_COLOR_2, BG_COLOR);
 }
 
-void hideNoBarriersMessage() {
+void drawTrapMessage() {
+	GUI_Text(LAT_PADDING, 302, (uint8_t *) "  you can't trap a player!   ", TXT_COLOR_2, BG_COLOR);
+}
+
+void hideSecondaryMessage() {
 	GUI_Text(LAT_PADDING, 302, (uint8_t *) "                             ", BG_COLOR, BG_COLOR);
 }
 

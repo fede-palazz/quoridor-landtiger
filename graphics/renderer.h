@@ -25,10 +25,10 @@ extern void updateCurrentTurnMessage(Player* player, uint8_t currentTurn);
 extern void drawBarrier(Barrier barrier);
 extern void deleteBarrier(Barrier barrier);
 extern void drawNoBarriersMessage(void);
-extern void hideNoBarriersMessage(void);
+extern void hideSecondaryMessage(void);
 extern void drawAllBarriers(Barrier* barriers, uint8_t barriersTot);
 extern void deleteAllBarriers(Barrier* barriers, uint8_t barriersTot);
 extern void refreshBarrierNum(uint8_t barrierNum, uint8_t currentTurn);
 extern void drawWinningMessage(void);
-
+extern void drawTrapMessage(void);
 #endif
