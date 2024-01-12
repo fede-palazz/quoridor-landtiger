@@ -51,6 +51,8 @@ void onJoystickSelect() {
 				disable_timer(0);
 				reset_timer(0);
 				game.countdown = COUNTDOWN_TIME_S;
+				/* Save last move */
+				saveLastMove(game.turn-1, 0, 0, currentPlayer->pos.y, currentPlayer->pos.x);
 				/* Check if player won the game */
 				if (checkWinningCondition()) {
 					game.status = FINISHED;
@@ -76,6 +78,8 @@ void onJoystickSelect() {
 			barrierPlaced = placeBarrier();			/* Try to place barrier and return operation result */
 			if (barrierPlaced) {
 				game.countdown = COUNTDOWN_TIME_S;
+				/* Save last move */
+				saveLastMove(game.turn-1, 1, barrier.direction, currentPlayer->pos.y, currentPlayer->pos.x);
 				/* A new turn has started	*/
 				if (game.turn == 1)						/* Override P2 timer */
 					GUI_Text(COUNT2_OFFSET_X, COUNT_OFFSET_Y, (uint8_t *) "     ", TXT_COLOR, BG_COLOR);

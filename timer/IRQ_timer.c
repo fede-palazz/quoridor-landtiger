@@ -52,6 +52,8 @@ void TIMER0_IRQHandler (void)
 		disable_timer(0);
 		reset_timer(0);
 		game.countdown = COUNTDOWN_TIME_S;
+		/* Save last move */
+		saveLastMove(game.turn-1, 0, 1, currentPlayer->pos.y, currentPlayer->pos.x);
 		enable_timer(0);
 		clearHighlightedSquares();
  		if (game.turn == 2)						/* Override current timer */

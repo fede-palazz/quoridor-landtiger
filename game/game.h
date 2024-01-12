@@ -46,5 +46,6 @@ extern uint8_t placeBarrier(void);
 extern void switchToMovingMode(void);
 extern uint8_t checkWinningCondition(void);
 extern void resetGame(void);
+extern void saveLastMove(uint8_t playerId, uint8_t isPlacingBarrier, uint8_t isBarrierHorizontal, uint8_t posY, uint8_t posX);
 
 #endif

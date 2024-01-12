@@ -39,10 +39,8 @@ void initGame() {
 
 void initPlayers() {
 	/* Set players' coordinates */
-//	Coordinate initialPosP1 = {6, 12};
-//	Coordinate initialPosP2 = {6, 0};
-	Coordinate initialPosP1 = {4, 6};
-	Coordinate initialPosP2 = {4, 4};
+	Coordinate initialPosP1 = {6, 12};
+	Coordinate initialPosP2 = {6, 0};
 	initPlayer(&p1, initialPosP1, GREEN_GH, BARRIER_NUM);
 	initPlayer(&p2, initialPosP2, RED_GH, BARRIER_NUM);
 	initBoard(initialPosP1, initialPosP2);
@@ -318,3 +316,7 @@ void resetGame() {
 	drawInitialMessage();
 }
 
+void saveLastMove(uint8_t playerId, uint8_t isPlacingBarrier, uint8_t isBarrierHorizontal, uint8_t posY, uint8_t posX) {
+	uint8_t mode = (isPlacingBarrier << 4) | isBarrierHorizontal;
+	game.lastMove = (playerId << 24) | (mode << 16) | (posY << 8) | (posX);
+}
