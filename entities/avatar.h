@@ -3,8 +3,8 @@
 
 #include "../game/constants.h"
 
-#define AVATAR_SIZE		26
-#define NUM_AVATARS 	8
+#define AVATAR_SIZE					26
+#define NUM_AVATARS 				8
 
 
 typedef struct Avatar {

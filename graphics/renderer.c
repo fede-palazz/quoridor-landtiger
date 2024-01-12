@@ -92,7 +92,16 @@ void drawAvatar(Avatar avatar, Coordinate squarePos) {
 	// Draw avatar
 	for (row=0; row<AVATAR_SIZE; row++)
 		for (col=0; col<AVATAR_SIZE; col++)
-			// If pixel should be coloureds
+			// If pixel should be coloured
+			if (avatar.pixelData[row][col])
+				LCD_SetPoint(pos.x + col, pos.y + row, avatar.color);
+}
+
+void drawBottomAvatar(Avatar avatar, Coordinate pos) {
+	int row, col;
+	for (row=0; row<AVATAR_SIZE; row++)
+		for (col=0; col<AVATAR_SIZE; col++)
+			// If pixel should be coloured
 			if (avatar.pixelData[row][col])
 				LCD_SetPoint(pos.x + col, pos.y + row, avatar.color);
 }
@@ -190,19 +199,26 @@ void drawInitialMessage() {
 }
 
 void drawCurrentTurnMessage(Player* player, uint8_t currentTurn) {
-	// TODO: draw small avatar
+	Coordinate bottomAvatarPos = {LAT_PADDING + 5, LCD_HEIGHT - 45};
+	Coordinate endAvatarPos;
+	endAvatarPos.x = bottomAvatarPos.x + AVATAR_SIZE;
+	endAvatarPos.y = bottomAvatarPos.y + AVATAR_SIZE;
 	if (currentTurn == 1)
 			GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "     P1 it's your turn!     ", TXT_COLOR, BG_COLOR);
 	else
 			GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "     P2 it's your turn!     ", TXT_COLOR, BG_COLOR);
+	drawBottomAvatar(player->avatar, bottomAvatarPos);
+	//drawRectangle(bottomAvatarPos, endAvatarPos, BLACK, NO_COLOR);
+	drawNoBarriersMessage(); // TOREMOVE
 }
 
 void updateCurrentTurnMessage(Player* player, uint8_t currentTurn) {
-	// TODO: draw small avatar
+	Coordinate bottomAvatarPos = {LAT_PADDING + 5, LCD_HEIGHT - 45};
 	if (currentTurn == 1)
 		GUI_Text(LAT_PADDING + 50, LCD_HEIGHT - 38, (uint8_t *) "1", TXT_COLOR, BG_COLOR);
 	else
 		GUI_Text(LAT_PADDING + 50, LCD_HEIGHT - 38, (uint8_t *) "2", TXT_COLOR, BG_COLOR);
+	drawBottomAvatar(player->avatar, bottomAvatarPos);
 }
 
 void drawNoBarriersMessage() {

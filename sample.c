@@ -1,26 +1,21 @@
 /****************************************Copyright (c)****************************************************
 **                                      
-**                                 http://www.powermcu.com
+**                     https://github.com/fede-palazz/quoridor-landtiger
 **
 **--------------File Info---------------------------------------------------------------------------------
 ** File name:               main.c
 ** Descriptions:            The GLCD application function
 **
 **--------------------------------------------------------------------------------------------------------
-** Created by:              AVRman
+** Created by:              Federico Palazzi
 ** Created date:            2010-11-7
 ** Version:                 v1.0
-** Descriptions:            The original version
-**
-**--------------------------------------------------------------------------------------------------------
-** Modified by:             Paolo Bernardi
-** Modified date:           03/01/2020
-** Version:                 v2.0
-** Descriptions:            basic program for LCD and Touch Panel teaching
+** Descriptions:            Quoridor game for LandTiger board
 **
 *********************************************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdlib.h>
 #include "LPC17xx.h"
 #include "RIT/RIT.h"
 #include "game/game.h"
@@ -35,16 +30,15 @@
 extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emulator to find the symbol (can be placed also inside system_LPC17xx.h but since it is RO, it needs more work)
 #endif
 
-
 int main(void)
 {
   SystemInit();  									/* System Initialization (i.e., PLL)  */
-  BUTTON_init();									/* Buttons Initialization 						*/
+	BUTTON_init();									/* Buttons Initialization 						*/
 	joystick_init();								/* Joystick Initialization 						*/
-	LCD_Initialization();						/* LCD display Initialization					*/
 	init_timer(0, 0x017D7840);			/* Timer0 Initialization (1s)					*/
 	init_RIT(0x004C4B40);						/* RIT Initialization (50 ms)       	*/
-	disableInputDetection();
+	enable_RIT();
+	LCD_Initialization();						/* LCD display Initialization					*/
 	initGame();
 	resetDetectedInputs();
   enableInputDetection();

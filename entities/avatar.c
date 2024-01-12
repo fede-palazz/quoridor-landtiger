@@ -1,7 +1,8 @@
 #include "avatar.h"
 #include <stdlib.h>
+#include "LPC17xx.h"
 
-
+/* Large size avatars */
 static uint8_t avatar_1_pixel_data[AVATAR_SIZE][AVATAR_SIZE] = {
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -228,14 +229,19 @@ static uint8_t avatar_8_pixel_data[AVATAR_SIZE][AVATAR_SIZE] = {
 };
 static uint8_t chosenAvatars = 0;
 int randomIndex;
-
-
+uint8_t randomFirstTime = 1;
+uint8_t seed;
 /* Function that returns a random avatar */
 Avatar get_random_avatar(Color color) {
   Avatar avatar;
 	// Check if all the avatars have been used
 	if (chosenAvatars == 255) {
 		chosenAvatars = 0;
+	}
+	if (randomFirstTime) {			/* Inizialize rand() seed */
+		seed = LPC_RIT->RICOUNTER;
+		srand(seed);
+		randomFirstTime = 0;
 	}
 	// Check whether the avatar was already assigned
 	do {
