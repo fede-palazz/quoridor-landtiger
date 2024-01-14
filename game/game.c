@@ -26,12 +26,12 @@ volatile uint8_t isBarrierWarningDisplayed = 0;
 
 
 void initGame() {
-	game.status = WAITING;							/* Game initialization		*/
+	game.status = WAITING;									/* Game initialization		*/
 	game.turn = INITIAL_TURN;
 	game.lastMove = 0;
-	//LCD_Clear(BG_COLOR);							/* Set background color 	*/
-	drawBoard(BLACK, NO_COLOR);					/* Board initialization		*/
-	initPlayers();											/* Players initialization	*/
+	LCD_Clear(BG_COLOR);										/* Set background color 	*/
+	drawBoard(BORDER_COLOR, SQUARE_COLOR);	/* Board initialization		*/
+	initPlayers();													/* Players initialization	*/
 	drawInitialLabels();
 	drawPlayers(&p1, &p2);
 	drawInitialMessage();
@@ -41,7 +41,7 @@ void initPlayers() {
 	/* Set players' coordinates */
 	Coordinate initialPosP1 = {6, 12};
 	Coordinate initialPosP2 = {6, 0};
-	initPlayer(&p1, initialPosP1, GREEN_GH, BARRIER_NUM);
+	initPlayer(&p1, initialPosP1, WHITE_GH, BARRIER_NUM);
 	initPlayer(&p2, initialPosP2, RED_GH, BARRIER_NUM);
 	initBoard(initialPosP1, initialPosP2);
 	/* Update current player */

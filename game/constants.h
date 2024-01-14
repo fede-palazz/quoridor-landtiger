@@ -42,22 +42,23 @@
 #define BLUE_GH						0x8EBB
 #define GRAY_GH						0x8472
 #define RED_GH						0xF90A
+#define WHITE_GH					0xE77E
 #define CYAN          		0x7FFF
 #define YELLOW        		0xFFE0
 #define DARK_GRAY 				0x4208
 #define TRANSPARENT				0x590C
 
-// TODO
-#define BG_COLOR					WHITE
-#define SQUARE_COLOR			WHITE
-#define BORDER_COLOR			BLACK
-#define TXT_COLOR					BLACK
-#define TXT_COLOR_2				GRAY_GH
-#define HIGHLIGHT_COLOR		YELLOW
-#define SELECT_COLOR			GREEN
-#define NEW_BARR_COLOR		CYAN
+/* Game elements colors */
+#define BG_COLOR					0x0882
+#define SQUARE_COLOR			BG_COLOR
+#define BORDER_COLOR			0x8472
+#define TXT_COLOR					0xCE9B
+#define TXT_COLOR_2				0x5B2D
+#define HIGHLIGHT_COLOR		0x31C8
+#define SELECT_COLOR			WHITE_GH
+#define NEW_BARR_COLOR		WHITE_GH
 #define BARRIER_COLOR			RED
-#define BARRIER_BG_COLOR  WHITE
+#define BARRIER_BG_COLOR  BG_COLOR
 #define NO_COLOR      		0xCCCC
 
 
