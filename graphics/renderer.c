@@ -194,16 +194,26 @@ void drawInitialLabels() {
 }
 
 void drawInitialMessage() {
+	// Delete bottom avatar in case of game restart
+	Coordinate bottomAvatarPos = {LAT_PADDING + 5, LCD_HEIGHT - 45};
+	Coordinate endAvatarPos;
+	endAvatarPos.x = bottomAvatarPos.x + AVATAR_SIZE;
+	endAvatarPos.y = bottomAvatarPos.y + AVATAR_SIZE;
+	drawRectangle(bottomAvatarPos, endAvatarPos, BG_COLOR, BG_COLOR);
 	// Bottom message
 	GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "Press INT0 to start the game", TXT_COLOR, BG_COLOR); 
 }
 
 void drawCurrentTurnMessage(Player* player, uint8_t currentTurn) {
 	Coordinate bottomAvatarPos = {LAT_PADDING + 5, LCD_HEIGHT - 45};
+	Coordinate endAvatarPos;
+	endAvatarPos.x = bottomAvatarPos.x + AVATAR_SIZE;
+	endAvatarPos.y = bottomAvatarPos.y + AVATAR_SIZE;
 	if (currentTurn == 1)
 			GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "     P1 it's your turn!     ", TXT_COLOR, BG_COLOR);
 	else
 			GUI_Text(LAT_PADDING + 2, LCD_HEIGHT - 38, (uint8_t *) "     P2 it's your turn!     ", TXT_COLOR, BG_COLOR);
+	drawRectangle(bottomAvatarPos, endAvatarPos, BG_COLOR, BG_COLOR);
 	drawBottomAvatar(player->avatar, bottomAvatarPos);
 }
 
@@ -244,5 +254,5 @@ void refreshBarrierNum(uint8_t barrierNum, uint8_t currentTurn) {
 
 void drawWinningMessage() {
 	GUI_Text(LAT_PADDING + 66, LCD_HEIGHT - 38, (uint8_t *) "won the game!  ", TXT_COLOR, BG_COLOR);
-	GUI_Text(LAT_PADDING, 302, (uint8_t *) "Press INT0 to restart the game", TXT_COLOR_2, BG_COLOR);
+	GUI_Text(LAT_PADDING, 300, (uint8_t *) "Press INT0 to restart the game", TXT_COLOR_2, BG_COLOR);
 }
